@@ -23,7 +23,7 @@ public class Author {
 	private String surname;
 	private String country;
 	private int yearOfBirth;
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="author")
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<Book> books = new ArrayList<Book>();
 
 	public Author() {

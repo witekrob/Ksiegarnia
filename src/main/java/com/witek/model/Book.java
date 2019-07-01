@@ -21,19 +21,21 @@ public class Book {
 	@ManyToOne (cascade=CascadeType.ALL)
 	private Author author;
 	private int pages;
+	private int price;
 
 	public Book() {
 	}
 
-	public Book(String title, Author author, int pages) {
+	public Book(String title, Author author, int price, int pages) {
 		this.title = title;
 		this.author = author;
 		this.pages = pages;
+		this.setPrice(price);
 	}
 
 	@Override
 	public String toString() {
-		return "Book [id_number=" + id_number + ", title=" + title + ", pages=" + pages + "]";
+		return "Book [id_number=" + id_number + ", title=" + title + ", pages=" + pages + " price=" + price + "]";
 	}
 
 	@Override
@@ -43,6 +45,7 @@ public class Book {
 		result = prime * result + ((author == null) ? 0 : author.hashCode());
 		result = prime * result + id_number;
 		result = prime * result + pages;
+		result = prime * result + price;
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -64,6 +67,8 @@ public class Book {
 		if (id_number != other.id_number)
 			return false;
 		if (pages != other.pages)
+			return false;
+		if (price != other.price)
 			return false;
 		if (title == null) {
 			if (other.title != null)
@@ -103,6 +108,14 @@ public class Book {
 
 	public void setPages(int pages) {
 		this.pages = pages;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 }

@@ -6,9 +6,24 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<table>
+<tr>
+<th>Name</th>
+<th>Surname</th>
+<th>Country</th>
+<th>Year of birth</th>
+<th>Book</th>
+</tr>
 <th:block th:each="author : ${find}">
-<h2 th:text = "${author}"></h2>
+<tr> <td th:text = "${author.name}"></td>
+<td th:text = "${author.surname}"></td>
+<td th:text = "${author.country}"></td>
+<td th:text = "${author.yearOfBirth}"></td>
+<td th:text = "${author.books}"></td>
+</tr>
 </th:block>
+</table>
+
+
 </body>
 </html>

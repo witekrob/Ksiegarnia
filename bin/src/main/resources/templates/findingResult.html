@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<th:block th:each="author : ${find}">
+<h2 th:text = "${author}"></h2>
+</th:block>
+</body>
+</html>
