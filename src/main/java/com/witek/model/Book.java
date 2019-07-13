@@ -16,7 +16,7 @@ public class Book {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_number;
+	private Long id_number;
 	private String title;
 	@ManyToOne (cascade=CascadeType.ALL)
 	private Author author;
@@ -43,7 +43,7 @@ public class Book {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((author == null) ? 0 : author.hashCode());
-		result = prime * result + id_number;
+		result = prime * result + ((id_number == null) ? 0 : id_number.hashCode());
 		result = prime * result + pages;
 		result = prime * result + price;
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
@@ -64,7 +64,10 @@ public class Book {
 				return false;
 		} else if (!author.equals(other.author))
 			return false;
-		if (id_number != other.id_number)
+		if (id_number == null) {
+			if (other.id_number != null)
+				return false;
+		} else if (!id_number.equals(other.id_number))
 			return false;
 		if (pages != other.pages)
 			return false;
@@ -78,11 +81,11 @@ public class Book {
 		return true;
 	}
 
-	public int getId_number() {
+	public Long getId_number() {
 		return id_number;
 	}
 
-	public void setId_number(int id_number) {
+	public void setId_number(Long id_number) {
 		this.id_number = id_number;
 	}
 

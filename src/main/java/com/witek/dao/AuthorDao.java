@@ -12,7 +12,7 @@ public interface AuthorDao extends JpaRepository<Author, Long> {
 	
 	List<Author> findBySurname(String surname);
 	List<Author> findByCountry(String country);
-
+	Author findBySurnameAndYearOfBirth(String surname, int yearOfBirth);
 	
 	
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,7 +22,10 @@ public class AuthorController {
 	public AuthorController(AuthorService authorService) {
 		this.authorService = authorService;
 	}
-
+	@GetMapping("/findBy")
+	public String findBy() {
+		return "find";
+	}
 	@PostMapping("/findBy")
 	public String findBy(@RequestParam String toFind, String findBy, Model model) {
 		List<Author> find = new ArrayList<Author>();
@@ -35,7 +39,6 @@ public class AuthorController {
 			find = authorService.findByCountry(toFind);
 			break;
 		}
-
 		model.addAttribute("find", find);
 		return "findingResult";
 	}

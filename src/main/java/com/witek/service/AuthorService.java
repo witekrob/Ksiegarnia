@@ -38,5 +38,9 @@ public List<Author> findByCountry(String country) {
 	List<Author> byCountry = authorDao.findByCountry(country);
 	return byCountry;
 }
+public Author checkIfExist(Author author) {
+	Author isThereAny = authorDao.findBySurnameAndYearOfBirth(author.getSurname(), author.getYearOfBirth());
+	return isThereAny;
+}
 	
 }

@@ -24,5 +24,8 @@ public List<Book> getAllBooks() {
 	List<Book> allBooks = bookDao.findAll();
 	return allBooks;
 }
-
+public Book getById(Long id) {
+	Book foundById = bookDao.findById(id).get();
+	return foundById;
+}
 }

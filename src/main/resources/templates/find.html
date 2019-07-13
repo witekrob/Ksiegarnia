@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Find a book</title>
+</head>
+<body>
+<div th:insert="/index.html" >...</div>
+<div>
+
+	<h2>znajdz autora według</h2>
+	<form action="/findBy" method="post">
+		<input type="radio" name="findBy" value="surname" required="required">Surname <br>
+		<input type="radio" name="findBy" value="country" required="required">Country <br>
+		<input type="text" name="toFind"> podaj parametr <br> <input
+			type="submit">
+	</form>
+	</div>
+</body>
+</html>

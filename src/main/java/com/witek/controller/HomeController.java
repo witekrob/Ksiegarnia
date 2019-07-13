@@ -34,30 +34,8 @@ public class HomeController {
 	}
 
 	@GetMapping("/")
-	public String goHome(Model model) {
-		if (!allAuthors.isEmpty()) {
-			allAuthors.clear();
-			model.addAttribute("allAuthors", allAuthors);
+	public String goHome() {
 			return "index";
-
-		} else {
-			allAuthors = authorService.getAll();
-			model.addAttribute("allAuthors", allAuthors);
-			return "index";
-		}
-	}
-
-	@PostMapping("/add")
-	public String form(@ModelAttribute Book book, Author author, Model model) {
-		book.setAuthor(author);
-		author.getBooks().add(book);
-		bookService.saveBook(book);
-
-		System.out.println("author " + author);
-		System.out.println(author.getBooks());
-		model.addAttribute("book", book);
-		model.addAttribute("author", author);
-		return "success";
-	}
-
 }
+}
+ 
