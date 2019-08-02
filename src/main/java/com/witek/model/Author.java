@@ -18,7 +18,7 @@ public class Author {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int author_id;
+	private Long author_id;
 	private String name;
 	private String surname;
 	private String country;
@@ -29,7 +29,8 @@ public class Author {
 	public Author() {
 	}
 
-	public Author(String name, String surname, String country, int yearOfBirth, List<Book> books) {
+	public Author(Long author_id,String name, String surname, String country, int yearOfBirth, List<Book> books) {
+		this.setAuthor_id(author_id);
 		this.name = name;
 		this.surname = surname;
 		this.country = country;
@@ -37,11 +38,13 @@ public class Author {
 		this.books = books;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + author_id;
+		result = prime * result + ((author_id == null) ? 0 : author_id.hashCode());
+		result = prime * result + ((books == null) ? 0 : books.hashCode());
 		result = prime * result + ((country == null) ? 0 : country.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
@@ -58,7 +61,15 @@ public class Author {
 		if (getClass() != obj.getClass())
 			return false;
 		Author other = (Author) obj;
-		if (author_id != other.author_id)
+		if (author_id == null) {
+			if (other.author_id != null)
+				return false;
+		} else if (!author_id.equals(other.author_id))
+			return false;
+		if (books == null) {
+			if (other.books != null)
+				return false;
+		} else if (!books.equals(other.books))
 			return false;
 		if (country == null) {
 			if (other.country != null)
@@ -82,7 +93,7 @@ public class Author {
 
 	@Override
 	public String toString() {
-		return "Author [author_id=" + author_id + ", name=" + name + ", surname=" + surname + ", country=" + country
+		return "Author [author_id=" + getAuthor_id() + ", name=" + name + ", surname=" + surname + ", country=" + country
 				+ ", yearOfBirth=" + yearOfBirth +  "]";
 	}
 
@@ -124,6 +135,14 @@ public class Author {
 
 	public void setBooks(List<Book> books) {
 		this.books = books;
+	}
+
+	public Long getAuthor_id() {
+		return author_id;
+	}
+
+	public void setAuthor_id(Long author_id) {
+		this.author_id = author_id;
 	}
 
 }

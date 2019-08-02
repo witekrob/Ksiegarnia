@@ -76,6 +76,8 @@ public class BookController {
 	@PostMapping("/addNew")
 	public String form(@ModelAttribute Book book, Author author, Model model) {
 		Author result = authorService.checkIfExist(author);
+		System.out.println("SPRAWDZAM : " + book + " " + author);
+		
 		System.out.println("wynik to :  " + result + "a wpisywany to : " + author);
 		if (result != null) {
 			author = result;
@@ -84,7 +86,6 @@ public class BookController {
 		book.setAuthor(author);
 		author.getBooks().add(book);
 		bookService.saveBook(book);
-
 		model.addAttribute("book", book);
 		model.addAttribute("author", author);
 		return "success";

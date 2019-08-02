@@ -15,7 +15,6 @@
 			<tr bordercolor="blue">
 			<th>Name</th>
 			<th>Surname</th>
-			<th> Details</th>
 			<th>Year of birth</th>
 			<th>Country</th>
 			<th>Books</th>
@@ -25,8 +24,6 @@
 			<tr>
 				<td th:text="${author.name}">nie ma nic</td>
 				<td th:text="${author.surname}">nie ma nic</td>
-				<td><a th:href = "@{'/authorDetails/' + ${author.author_id}}">Details</a></td>
-				
 				<td th:text="${author.yearOfBirth}">nie ma nic</td>
 				<td th:text="${author.country}">nie ma nic</td>
 				<th:block th:each="book : ${author.books}">

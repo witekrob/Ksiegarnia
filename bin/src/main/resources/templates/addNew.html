@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Dodaj nowa ksiazka</title>
+</head>
+
+<body>
+
+<div th:insert="/index.html" >...</div>
+<div><h1>Księgarnia</h1>
+	<form action="/addNew" method="post">
+		<input type="text" name="title">Title<br> 
+		<input type="number" name="pages">pages<br> 
+		<input type ="text" name="price"> price<br>
+		<input type="text" name="name">name<br> 
+		<input type="text" name="surname"> surname<br> 
+		<input type="text" name="country">country<br>
+		<input type="number" name="yearOfBirth"> year of birth<br>
+
+
+		<input type="submit">
+	</form>
+</div>
+		
+</body>
+</html>

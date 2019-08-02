@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Show details about author</title>
+</head>
+
+<body>
+
+<div th:insert="/index.html" >...</div>
+<table>
+<tr>
+<th> Name</th>
+<th> Surname</th>
+<th> Country</th>
+<th> YOB</th>
+<th> Id number</th>
+</tr>
+<tr>
+<td th:text= "${bookDetail.title}"></td>
+<td th:text= "${bookDetail.pages}"></td>
+<td th:text= "${bookDetail.price}"></td>
+<td th:text="${bookDetail.id_number}"></td>
+</tr>
+</table>
+
+<h2> Czy chcesz zmienic jakies dane?</h2>
+
+<form method="post">
+
+<input type="text" name="title" required="required">New title?<br>
+<input type="number" name="pages"required="required" >New pages?<br>
+<input type="number" name="price" required="required">New price?<br>
+<input type = "submit">
+</form>
+</body>
+</html>

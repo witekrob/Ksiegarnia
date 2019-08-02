@@ -2,57 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Ksiegarnia</title>
 </head>
 <body>
+<div style="background-color: red">
 	<h1>Księgarnia</h1>
-	<form action="/add" method="post">
-		<input type="text" name="title">Title<br> 
-		<input type="number" name="pages">pages<br> 
-		<input type="text" name="name">name<br> 
-		<input type="text" name="surname"> surname<br> 
-		<input type="text" name="country">country<br>
-		<input type="number" name="yearOfBirth"> year of birth<br>
-
-
-		<input type="submit">
-	</form>
-
-
-	<h2>znajdz autora według</h2>
-	<form action="/findBy" method="post">
-	<input type = "radio" name="findBy" value="surname">Surname <br>
-	<input type = "radio" name="findBy" value="country">Country <br>
-		<input type="text" name="toFind"> podaj parametr <input
-			type="submit">
-	</form>
-
-	<h2>Wyswietl wszystkie ksiazki</h2>
-
-	<form action="/">
-		<input type="Submit" value="show ALL">
-	</form>
-
-	<table border="2">
-			<tr bordercolor="blue">
-			<th>Name</th>
-			<th>Surname</th>
-			<th>Year of birth</th>
-			<th>Country</th>
-			<th>Books</th>
-			</tr>
-		
-		<th:block th:each="author : ${allAuthors}">
-			<tr>
-				<td th:text="${author.name}">nie ma nic</td>
-				<td th:text="${author.surname}">nie ma nic</td>
-				<td th:text="${author.yearOfBirth}">nie ma nic</td>
-				<td th:text="${author.country}">nie ma nic</td>
-				<td th:text="${author.books}">nie ma nic</td>
-				
-			</tr>
-		</th:block>
-	</table>
-
+<a href = "/addNew">Dodaj nowa</a><br>
+<a href = "/findBy">Szukaj </a> <br>
+<a href = "/showAll">Show all</a><br>
+</div>
+<script type="text/javascript" src="js.js"></script>
 </body>
 </html>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.witek.dao.AuthorDao;
 import com.witek.model.Author;
+import com.witek.model.Book;
 
 @Service
 public class AuthorService {
@@ -41,6 +42,10 @@ public List<Author> findByCountry(String country) {
 public Author checkIfExist(Author author) {
 	Author isThereAny = authorDao.findBySurnameAndYearOfBirth(author.getSurname(), author.getYearOfBirth());
 	return isThereAny;
+}
+public Author getById(Long author_id) {
+	Author foundById = authorDao.findById(author_id).get();
+	return foundById;
 }
 	
 }

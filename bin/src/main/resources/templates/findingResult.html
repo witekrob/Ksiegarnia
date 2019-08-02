@@ -3,12 +3,33 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Finding result</title>
 </head>
 <body>
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Surname</th>
+			<th>Country</th>
+			<th>Year of birth</th>
+			<th>Book</th>
+		</tr>
+		<th:block th:each="author : ${find}">
+			<tr>
+				<td th:text="${author.name}"></td>
+				<td th:text="${author.surname}"></td>
+				<td th:text="${author.country}"></td>
+				<td th:text="${author.yearOfBirth}"></td>
+				<th:block th:each="book : ${author.books}">
+					<td th:text="${book.title}"></td>
+					<td><a  th:href="@{'/bookDetails/' + ${book.id_number}}">Details</a></td>
+				</th:block>
 
-<th:block th:each="author : ${find}">
-<h2 th:text = "${author}"></h2>
-</th:block>
+			</tr>
+
+		</th:block>
+	</table>
+
+
 </body>
 </html>
