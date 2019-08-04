@@ -7,31 +7,31 @@
 
 <body>
 
-<div th:insert="/index.html" >...</div>
+	<div th:insert="/index.html">...</div>
 
 
-<h1> SHOW ALL </h1>
+	<h1>SHOW ALL</h1>
 	<table border="2">
-			<tr bordercolor="blue">
+		<tr style="font-size: 40px">
 			<th>Name</th>
 			<th>Surname</th>
-			<th> Details</th>
+			<th>Details</th>
 			<th>Year of birth</th>
 			<th>Country</th>
 			<th>Books</th>
-			</tr>
-		
+		</tr>
+
 		<th:block th:each="author : ${allAuthors}">
-			<tr>
+			<tr bgcolor="yellow" style="font-size: 30px">
 				<td th:text="${author.name}">nie ma nic</td>
 				<td th:text="${author.surname}">nie ma nic</td>
-				<td><a th:href = "@{'/authorDetails/' + ${author.author_id}}">Details</a></td>
-				
+				<td><a th:href="@{'/authorDetails/' + ${author.author_id}}">Details</a></td>
+
 				<td th:text="${author.yearOfBirth}">nie ma nic</td>
 				<td th:text="${author.country}">nie ma nic</td>
 				<th:block th:each="book : ${author.books}">
-				<td th:text="${book.title}">nie ma nic</td>
-				<td><a th:href = "@{'/bookDetails/' + ${book.id_number}}">Details</a></td>
+					<td th:text="${book.title}">nie ma nic</td>
+					<td><a th:href="@{'/bookDetails/' + ${book.id_number}}">Details</a></td>
 				</th:block>
 			</tr>
 		</th:block>

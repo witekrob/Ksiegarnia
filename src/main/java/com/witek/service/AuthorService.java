@@ -25,12 +25,6 @@ public List<Author> getAll (){
 public void addNewAuthor(Author author) {
 	authorDao.save(author);
 }
-
-public void editAuthor(String surname, Author newDetails) {
-	Author toEdit = authorDao.findBySurname(surname).get(0);
-	toEdit = newDetails;
-	authorDao.save(toEdit);
-}
 public List<Author> findBySurname(String surname) {
 	List<Author> bySurname = authorDao.findBySurname(surname);
 	return bySurname;
@@ -46,6 +40,22 @@ public Author checkIfExist(Author author) {
 public Author getById(Long author_id) {
 	Author foundById = authorDao.findById(author_id).get();
 	return foundById;
+}
+public Author editAuthor(Author newDetailsAuthor, Author authorToEdit) {
+	if (newDetailsAuthor.getCountry() != "") {
+		authorToEdit.setCountry(newDetailsAuthor.getCountry());
+	}
+	if (newDetailsAuthor.getName() != "") {
+		authorToEdit.setName(newDetailsAuthor.getName());
+	}
+	if (newDetailsAuthor.getSurname() != "") {
+		authorToEdit.setSurname(newDetailsAuthor.getSurname());
+	}
+	if (newDetailsAuthor.getYearOfBirth() != 0) {
+		authorToEdit.setYearOfBirth(newDetailsAuthor.getYearOfBirth());
+	}
+	this.addNewAuthor(authorToEdit);
+	return authorToEdit;
 }
 	
 }

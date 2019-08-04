@@ -36,35 +36,31 @@ public class BookController {
 		this.bookService = bookService;
 		this.authorService = authorService;
 	}
-	@GetMapping ("/bookDetails")
+
+	@GetMapping("/bookDetails")
 	public String getAll(Model model) {
 		allAuthors = authorService.getAll();
-		model.addAttribute("allAuthors",allAuthors);
-		
+		model.addAttribute("allAuthors", allAuthors);
+
 		return "showAll";
 	}
-	
-	
+
 	@GetMapping("/bookDetails/{id}")
 	public String bookDetails(@PathVariable Long id, Model model) {
-		System.out.println(id);
 		Book bookDetail = bookService.getById(id);
-		System.out.println(bookDetail);
 		model.addAttribute("bookDetail", bookDetail);
-		return "bookDetail";
+		return "bookDetails";
 	}
-	@PostMapping("bookDetails/{id}")
-	public String editBookDetails(@PathVariable Long id,@RequestParam int pages, @RequestParam int price) {
-	Book bookToEdit = bookService.getById(id);
-	System.out.println(bookToEdit);
-	bookToEdit.setPages(pages);
-	bookToEdit.setPrice(price);
-	bookService.saveBook(bookToEdit);
-	System.out.println(pages + " " +price);
-	System.out.println("");System.out.println("");System.out.println("");System.out.println("");System.out.println("");
-	System.out.println(bookToEdit);
-	
-	return "index";	
+
+	@PostMapping("/bookDetails/{id}")
+	public String editBookDetails(@PathVariable Long id, Book newBookDetails, Model model) {
+
+		Book bookToEdit = bookService.getById(id);
+		System.out.println("book to edit : " + bookToEdit);
+		bookToEdit = bookService.editBook(bookToEdit, newBookDetails);
+		bookService.saveBook(bookToEdit);
+		model.addAttribute("bookDetail", bookToEdit);
+		return "bookDetails";
 	}
 
 	@GetMapping("/addNew")
@@ -77,7 +73,7 @@ public class BookController {
 	public String form(@ModelAttribute Book book, Author author, Model model) {
 		Author result = authorService.checkIfExist(author);
 		System.out.println("SPRAWDZAM : " + book + " " + author);
-		
+
 		System.out.println("wynik to :  " + result + "a wpisywany to : " + author);
 		if (result != null) {
 			author = result;

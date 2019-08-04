@@ -30,10 +30,24 @@ public class AuthorController {
 	}
 
 	@GetMapping("/authorDetails/{author_id}")
-	public void getAuthorDetails(@PathVariable Long author_id) {
+	public String getAuthorDetails(@PathVariable Long author_id, Model model) {
 		System.out.println("NUMER AUTORA :  " + author_id);
-		Author autor = authorService.getById(author_id);
-		System.out.println(autor);
+		Author author = authorService.getById(author_id);
+		System.out.println(author);
+		model.addAttribute("author", author);
+		return "authorDetails";
+	}
+
+	@PostMapping("/authorDetails/{author_id}")
+	public String editAuthorDetails(@PathVariable Long author_id, Author newDetailsAuthor, Model model) {
+		Author authorToEdit = authorService.getById(author_id);
+		System.out.println(" NOWE DANE  :   " + newDetailsAuthor);
+		System.out.println(" Autor do przerobienia  :   " + authorToEdit);
+		authorToEdit = authorService.editAuthor(newDetailsAuthor, authorToEdit);
+		System.out.println(" Autor po przerobieniu  :   " + authorToEdit);
+		model.addAttribute("author", authorToEdit);
+		return "authorDetails";
+
 	}
 
 	@PostMapping("/findBy")

@@ -8,19 +8,24 @@
 <body>
 
 <div th:insert="/index.html" >...</div>
-<table>
-<tr>
+<table border="2" >
+<tr bordercolor="black" align="justify" style="font-size: 40px">
 <th> Name</th>
 <th> Surname</th>
 <th> Country</th>
 <th> YOB</th>
 <th> Id number</th>
+<th> number of books</th>
 </tr>
-<tr>
-<td th:text= "${bookDetail.title}"></td>
-<td th:text= "${bookDetail.pages}"></td>
-<td th:text= "${bookDetail.price}"></td>
-<td th:text="${bookDetail.id_number}"></td>
+<tr  bgcolor="yellow" align="justify" style="font-size: 30px">
+
+<td th:text= "${author.name}"></td>
+<td th:text= "${author.surname}"></td>
+<td th:text= "${author.country}"></td>
+<td th:text="${author.yearOfBirth}"></td>
+<td th:text="${author.author_id}"></td>
+<td th:text="${author.books.size()}"></td>
+
 </tr>
 </table>
 
@@ -28,9 +33,10 @@
 
 <form method="post">
 
-<input type="text" name="title" required="required">New title?<br>
-<input type="number" name="pages"required="required" >New pages?<br>
-<input type="number" name="price" required="required">New price?<br>
+<input type="text" name="name" >New name?<br>
+<input type="text" name="surname" >New surname?<br>
+<input type="text" name="country" >New country?<br>
+<input type="number" name="yearOfBirth" required="required" >New year of birth?<br>
 <input type = "submit">
 </form>
 </body>
