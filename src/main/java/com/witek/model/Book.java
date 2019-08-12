@@ -22,21 +22,24 @@ public class Book {
 	private Author author;
 	private int pages;
 	private int price;
+	private int quantity;
 
 	public Book() {
 	}
 
-	public Book(Long id_number,String title, Author author, int price, int pages) {
+	public Book(Long id_number,String title, Author author, int price, int pages, int quantity) {
 		this.id_number= id_number;
 		this.title = title;
 		this.author = author;
 		this.pages = pages;
-		this.setPrice(price);
+		this.price=price;
+		this.quantity=quantity;
 	}
 
 	@Override
 	public String toString() {
-		return "Book [id_number=" + id_number + ", title=" + title + ", pages=" + pages + " price=" + price + "]";
+		return "Book [id_number=" + id_number + ", title=" + title + ", author=" + author + ", pages=" + pages
+				+ ", price=" + price + ", quantity=" + quantity + "]";
 	}
 
 	@Override
@@ -120,6 +123,14 @@ public class Book {
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 }

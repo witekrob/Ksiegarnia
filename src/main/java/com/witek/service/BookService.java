@@ -43,6 +43,9 @@ public class BookService {
 		if (newBookDetails.getPages() != 0) {
 			bookToEdit.setPages(newBookDetails.getPages());
 		}
+		if (newBookDetails.getPages() != 0) {
+			bookToEdit.setQuantity(newBookDetails.getQuantity());
+		}
 
 		return bookToEdit;
 	}

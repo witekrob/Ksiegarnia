@@ -30,7 +30,7 @@ public class Author {
 	}
 
 	public Author(Long author_id,String name, String surname, String country, int yearOfBirth, List<Book> books) {
-		this.setAuthor_id(author_id);
+		this.author_id=author_id;
 		this.name = name;
 		this.surname = surname;
 		this.country = country;

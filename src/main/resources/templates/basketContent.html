@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Show basket content</title>
+</head>
+
+<body>
+
+<div th:insert="/index.html" >...</div>
+<div th:text="${basket}"></div>
+
+<form action ="/clearWholeBasket" method="get">
+<input type="submit" value="Remove everything from basket">
+
+</form>
+
+</body>
