@@ -12,16 +12,17 @@ public class BasketItem {
 	
 @Id
 @GeneratedValue(strategy=GenerationType.IDENTITY)
-private int basketItem_id;
+private int basketItem_id=0;
 @OneToOne(targetEntity=Book.class)
 private Book book;
 private int quantity;
-
+private int price;
 public BasketItem() {}
-public BasketItem(int basketItem_id,Book book, int quantity) {
+public BasketItem(int basketItem_id,Book book, int quantity, int price) {
 	this.basketItem_id=basketItem_id;
 	this.book = book;
 	this.quantity= quantity;
+	this.price=price;
 }
 @Override
 public int hashCode() {
@@ -29,6 +30,7 @@ public int hashCode() {
 	int result = 1;
 	result = prime * result + basketItem_id;
 	result = prime * result + ((book == null) ? 0 : book.hashCode());
+	result = prime * result + getPrice();
 	result = prime * result + quantity;
 	return result;
 }
@@ -48,13 +50,16 @@ public boolean equals(Object obj) {
 			return false;
 	} else if (!book.equals(other.book))
 		return false;
+	if (getPrice() != other.getPrice())
+		return false;
 	if (quantity != other.quantity)
 		return false;
 	return true;
 }
 @Override
 public String toString() {
-	return "BasketItem [basketItem_id=" + basketItem_id + ", book=" + book + ", quantity=" + quantity + "]";
+	return "BasketItem [basketItem_id=" + basketItem_id + ", book=" + book + ", quantity=" + quantity + ", price="
+			+ getPrice() + "]";
 }
 public Book getBook() {
 	return book;
@@ -73,5 +78,11 @@ public int getBasketItem_id() {
 }
 public void setBasketItem_id(int basketItem_id) {
 	this.basketItem_id = basketItem_id;
+}
+public int getPrice() {
+	return price;
+}
+public void setPrice(int price) {
+	this.price = price;
 }
 }

@@ -3,6 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Show details about book</title>
+
+<script>
+function check(){
+var howMany=document.forms["basketCheckForm"]["howMany"];
+var form2=document.getElementById("howMany");
+//var form = document.getElementById("basketCheckForm");
+		console.log(howMany.value);
+		console.log(form2.value);
+		
+		
+}
+
+</script>
+
+
 </head>
 
 <body>
@@ -38,13 +53,12 @@
 
 
 Dodać do koszyka?
-<form method="post" action="/addToBasket/">
+<form id="basketCheckForm" method="post" action="/addToBasket/">
 
 <input type ="number" th:field="${bookDetail.id_number}" name="id_number" hidden="true">
-<input type="number" name="howMany" > How many add to basket?<br>
-<input type = "submit"> Add to basket<br>
+<input id="howMany" type="number" name="howMany"  > How many add to basket?<br>
+<input type="submit" id = "submitButton"   onsubmit="check()"> Add to basket<br>
 
 </form>
-
 </body>
 </html>

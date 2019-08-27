@@ -9,7 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.springframework.stereotype.Component;
+
 //@Entity
+@Component
 public class Basket {
 
 	//@Id
@@ -73,7 +76,5 @@ public class Basket {
 		this.basketItems = basketItems;
 	}
 
-	public void addToBasket(BasketItem item) {
-		this.getBasketItems().add(item);
-	}
+	
 }
