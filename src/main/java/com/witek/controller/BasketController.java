@@ -15,6 +15,7 @@ import com.witek.model.BasketItem;
 import com.witek.model.Book;
 import com.witek.service.BasketService;
 import com.witek.service.BookService;
+import com.witek.model.Client;
 
 @Controller
 public class BasketController {
@@ -24,6 +25,7 @@ private Basket basket = new Basket();
 private int overallPrice;
 private int price;
 private List<Basket> orderHistory;
+private Client client = new Client("Witek","Robak","witekr@poczta.fm","password",0,orderHistory);
 int basketItem_id = 0;
 @Autowired
 public BasketController(BookService bookService, BasketService basketService) {
@@ -82,6 +84,7 @@ public String basketProceed(Model model) {
 }
 @GetMapping("orderHistory")
 public String orderHistory(Model model) {
+	model.addAttribute("client",client);
 	model.addAttribute("orderHistory",orderHistory);
 	return "orderHistory";
 }

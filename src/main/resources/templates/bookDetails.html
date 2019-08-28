@@ -10,9 +10,7 @@ var howMany=document.forms["basketCheckForm"]["howMany"];
 var form2=document.getElementById("howMany");
 //var form = document.getElementById("basketCheckForm");
 		console.log(howMany.value);
-		console.log(form2.value);
-		
-		
+		console.log(form2.value);		
 }
 
 </script>
@@ -38,6 +36,28 @@ var form2=document.getElementById("howMany");
 <td th:text="${bookDetail.id_number}"></td>
 <td th:text="${bookDetail.quantity}"></td>
 </tr>
+</table>
+
+<table border="2px">
+<tr bordercolor="black" style="font-size: 40px" align="justify">
+<th>Name</th>
+<th>Surname</th>
+<th>Country</th>
+<th>YOB</th>
+<th>Author_id</th>
+
+
+
+</tr>
+<tr bgcolor="yellow"   style="font-size: 30px"  align="justify">
+<td th:text= "${bookDetail.author.name}"></td>
+<td th:text= "${bookDetail.author.surname}"></td>
+<td th:text= "${bookDetail.author.country}"></td>
+<td th:text="${bookDetail.author.yearOfBirth}"></td>
+<td th:text="${bookDetail.author.author_id}"></td>
+</tr>
+
+
 </table>
 
 <h2> Czy chcesz zmienic jakies dane?</h2>

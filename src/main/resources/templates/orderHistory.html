@@ -2,21 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Show details about book</title>
+<title>Order history</title>
 </head>
 
 <body>
+	<div th:insert="/index.html">...</div>
+	<h1>Transakcja przebiegła pomyślnie</h1>
 
-<div th:insert="/index.html" >...</div>
-<h1> Transakcja przebiegła pomyślnie</h1>
+<h1 th:text="${client}"></h1>
 
-<h2> twoja historia zamówień</h2>
-<table border="2px">
-<tr bgcolor="lightyellow"  th:each="basket : ${orderHistory}">
-<td th:text="${basket}"></td>
-</tr>
+	<h2>twoja historia zamówień</h2>
+	<table border="2px">
+		<tr bgcolor="lightyellow" th:each="basket : ${orderHistory}">
+			<td th:text="${basket}"></td>
+		</tr>
 
-</table>
+	</table>
 </body>
 
 </html>

@@ -19,6 +19,7 @@
 			<th>Year of birth</th>
 			<th>Country</th>
 			<th>Books</th>
+			<th>Quantity</th>
 		</tr>
 
 		<th:block th:each="author : ${allAuthors}">
@@ -31,6 +32,7 @@
 				<td th:text="${author.country}">nie ma nic</td>
 				<th:block th:each="book : ${author.books}">
 					<td th:text="${book.title}">nie ma nic</td>
+					<td th:text="${book.quantity}">nie ma nic</td>
 					<td><a th:href="@{'/bookDetails/' + ${book.id_number}}">Details</a></td>
 				</th:block>
 			</tr>
