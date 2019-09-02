@@ -7,11 +7,18 @@
 <body>
 <div style="background-color: red">
 	<h1>Księgarnia</h1>
+	<div th:if="${client}">
+	Witaj.Jesteś zalogowany
+	<hr>
+	</div> 
 <a href = "/addNew">Dodaj nowa</a><br>
 <a href = "/findBy">Szukaj </a> <br>
 <a href = "/showAll">Show all</a><br>
 <a href = "/basketContent">Basket conent</a><br>
 <a href = "/orderHistory">Order history</a><br>
+<a href = "/registration">Registration</a><br>
+<a href = "/clientInfo">Client Info</a><br>
+<a href = "/logout">Logout</a><br>
 </div>
 <script type="text/javascript" src="js.js"></script>
 </body>

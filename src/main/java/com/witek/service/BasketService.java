@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.witek.model.Basket;
 import com.witek.model.BasketItem;
 import com.witek.model.Book;
+import com.witek.model.Client;
 
 @Service
 public class BasketService {
@@ -47,48 +48,44 @@ public class BasketService {
 		return quantity * pricePerUnit;
 	}
 
-	public void addToBasket(BasketItem item) {
-		basket.getBasketItems().add(item);
-	}
-
 	public void removeOneFromBasket(BasketItem item) {
 		int itemId = item.getBasketItem_id();
 		basket.getBasketItems().remove(itemId);
 	}
 
 	public void basketProceed(Basket basket) {
-		System.out.println("zaczynam");
-		List<Book> allBooks = bookService.getAllBooks();
-		List<BasketItem> allItems = basket.getBasketItems();
-		List<Book> booksOrdered;
-		if (allItems != null)
-			for (BasketItem item : allItems) {
+		System.out.println("zaczynam realizowac zamowienie");
+		List<BasketItem> allItemsInBasket = basket.getBasketItems();
+		Book toEdit = new Book();
 
-				for (Book b : allBooks) {
-					if (b.getId_number() == item.getBook().getId_number()) {
-						b.setQuantity(b.getQuantity() - item.getQuantity());
-						bookService.saveBook(b);
-					}
+		if (allItemsInBasket != null) {
+			System.out.println("3");
 
-				}
-			}
+		for (BasketItem item : allItemsInBasket) {
+			System.out.println("4");
+			toEdit = bookService.getById(item.getBook().getId_number());
+			toEdit.setQuantity(toEdit.getQuantity() - item.getQuantity());
+			System.out.println("5   " + toEdit);
+			bookService.saveBook(toEdit);
+		}
+		}
 	}
 
 	public List<Basket> addToHistory(Basket basket) {
-		orderHistory.add(basket);
-		System.out.println("historia zamówień : " + orderHistory);
-		return orderHistory;
+		List<Basket> history = basket.getClient().getBasketHistory();
+		System.out.println("i'm making history");
+		history.add(basket);
+		return history;
 	}
 
 	public int overallPrice(Basket basket2) {
 		List<BasketItem> itemy = basket2.getBasketItems();
-		int price=0;
-		
-		for (BasketItem  item:itemy) {
-			price=price+item.getPrice();
+		int price = 0;
+
+		for (BasketItem item : itemy) {
+			price = price + item.getPrice();
 		}
-		
-		
+
 		return price;
 	}
 }

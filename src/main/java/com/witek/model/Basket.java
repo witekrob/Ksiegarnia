@@ -3,30 +3,39 @@ package com.witek.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.springframework.stereotype.Component;
 
-//@Entity
+@Entity
 @Component
 public class Basket {
 
-	//@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int basket_id;
-	//@OneToOne(targetEntity=BasketItem.class)
-	private List<BasketItem> basketItems; 
+	@OneToOne(targetEntity = BasketItem.class)
+	private List<BasketItem> basketItems;
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Client client;
+	
 	public Basket() {
 	}
-	public Basket(int basket_id, List<BasketItem> basketItems) {
-		this.basket_id=basket_id;
-		this.basketItems=basketItems;
+
+	public Basket(Client client,int basket_id, List<BasketItem> basketItems) {
+		this.basket_id = basket_id;
+		this.basketItems = basketItems;
+		this.client=client;
 	}
+
 	@Override
 	public String toString() {
 		return "Basket [basket_id=" + basket_id + ", basketItems=" + basketItems + "]";
@@ -41,6 +50,8 @@ public class Basket {
 		return result;
 	}
 
+	
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -76,5 +87,12 @@ public class Basket {
 		this.basketItems = basketItems;
 	}
 
-	
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
 }

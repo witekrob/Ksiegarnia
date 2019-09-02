@@ -58,8 +58,8 @@ public boolean equals(Object obj) {
 }
 @Override
 public String toString() {
-	return "BasketItem [basketItem_id=" + basketItem_id + ", book=" + book + ", quantity=" + quantity + ", price="
-			+ getPrice() + "]";
+	return "BasketItem [id=" + basketItem_id + ", quantity=" + quantity + ", price="
+			+ price  + book + "]";
 }
 public Book getBook() {
 	return book;

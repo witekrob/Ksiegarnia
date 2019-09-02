@@ -1,13 +1,14 @@
 package com.witek.model;
-
+import com.witek.model.*;
+import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -23,11 +24,8 @@ private String password;
 
 
 
-@OneToOne(mappedBy="client",cascade = CascadeType.ALL,targetEntity=Basket.class,
-fetch = FetchType.LAZY, optional = false)
-private Basket basket;
-//private List<Basket> basketHistory;
-
+@OneToMany(cascade = CascadeType.ALL)
+private List<Basket> basketHistory = new ArrayList<Basket>();
 
 public Client() {}
 public Client(String name, String surname, String email, String password, int client_id, List<Basket> basketHistory) {
@@ -116,7 +114,7 @@ public boolean equals(Object obj) {
 @Override
 public String toString() {
 	return "Client [client_id=" + client_id + ", name=" + name + ", surname=" + surname + ", email=" + email
-			+ ", password=" + password + "]";
+			+ ", password=" + password + ", basketHistory=" + basketHistory + "]";
 }
 public List<Basket> getBasketHistory() {
 	return basketHistory;

@@ -7,17 +7,20 @@
 
 <body>
 	<div th:insert="/index.html">...</div>
-	<h1>Transakcja przebiegła pomyślnie</h1>
-
-<h1 th:text="${client}"></h1>
+<div th:if="${orderHistory}">
 
 	<h2>twoja historia zamówień</h2>
 	<table border="2px">
 		<tr bgcolor="lightyellow" th:each="basket : ${orderHistory}">
-			<td th:text="${basket}"></td>
+			<td th:text="${basket.basketItems}"></td>
 		</tr>
 
 	</table>
+	</div>
+	<div th:unless="${orderHistory}">
+	<a href="/login">You must log in first</a>
+	
+	</div>
 </body>
 
 </html>

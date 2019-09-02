@@ -16,7 +16,7 @@
 				<th>Price</th>
 				<th>Quantity</th>
 				<th>Price (price*quantity))</th>
-				<th>New quantity </th>
+				<th>New quantity</th>
 			</tr>
 
 
@@ -27,14 +27,14 @@
 				<td th:text="${basketItem.book.price}"></td>
 				<td th:text="${basketItem.quantity}"></td>
 				<td th:text="${basketItem.price}"></td>
-				
+
 				<td>
-	<form method="post" action="/changeItemQuantity">
-	<input type="number" th:value="${basketItem.basketItem_id}" name="basketItem_id" hidden="hidden">
-		<input type="number" name="newQuantity">
-					 <input type="submit">
+					<form method="post" action="/changeItemQuantity">
+						<input type="number" th:value="${basketItem.basketItem_id}"
+							name="basketItem_id" hidden="hidden"> <input
+							type="number" name="newQuantity"> <input type="submit">
 					</form>
-			</td>
+				</td>
 			</tr>
 			<tr>
 				<th>Overall Price</th>
@@ -47,9 +47,14 @@
 			<input type="submit" value="Remove everything from basket">
 		</form>
 	</div>
-
-	<form action="/basketProceed" method="POST">
-		<input type="submit" value="Proceed">
-	</form>
+	<div th:if="${client}">
+		<form action="/basketProceed" method="POST">
+			<input type="submit" value="Proceed">
+		</form>
+		</div>
+		<div th:unless="${client}" ><a href="/login">You must log in</a>
+		
+	</div>
 
 </body>
+</html>
