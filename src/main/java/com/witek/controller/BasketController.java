@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.witek.dao.ClientDao;
 import com.witek.model.Basket;
 import com.witek.model.BasketItem;
 import com.witek.model.Book;
@@ -107,9 +108,12 @@ client = 	(Client)request.getSession().getAttribute("client");
 if (client==null ) {
 	System.out.println("client is NUKLLLL");
 }
+		
 		basket.setClient(client);
+		client.getBasketHistory().add(basket);
 		basketService.basketProceed(basket);
-		orderHistory = basketService.addToHistory(basket);;
+		List<Basket> orderHistory = client.getBasketHistory();
+		request.getSession().setAttribute("orderHistory", orderHistory);
 		System.out.println("history made");
 		
 		basket = new Basket();
@@ -121,11 +125,11 @@ if (client==null ) {
 
 	@GetMapping("orderHistory")
 	public String orderHistory(Model model, HttpServletRequest request) {
-		Client client = (Client)request.getSession().getAttribute("client");
-		List<Basket> orderHistory = new ArrayList<Basket>();
-		orderHistory = client.getBasketHistory();
+	Client client = (Client)request.getSession().getAttribute("client");
+		//List<Basket> orderHistory = new ArrayList<Basket>();
+		//if (client!=null) {
+		orderHistory = clientService.getOrderHistory(client);
 		model.addAttribute("orderHistory",orderHistory);
-		//model.addAttribute("client", client);
 		return "orderHistory";
 	}
 

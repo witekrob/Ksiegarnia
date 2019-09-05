@@ -1,9 +1,12 @@
 package com.witek.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -12,11 +15,13 @@ public class BasketItem {
 	
 @Id
 @GeneratedValue(strategy=GenerationType.IDENTITY)
-private int basketItem_id=0;
+private int basketItem_id;
 @OneToOne(targetEntity=Book.class)
 private Book book;
 private int quantity;
 private int price;
+@ManyToOne (cascade=CascadeType.ALL)
+private Basket basket;
 public BasketItem() {}
 public BasketItem(int basketItem_id,Book book, int quantity, int price) {
 	this.basketItem_id=basketItem_id;
@@ -30,7 +35,7 @@ public int hashCode() {
 	int result = 1;
 	result = prime * result + basketItem_id;
 	result = prime * result + ((book == null) ? 0 : book.hashCode());
-	result = prime * result + getPrice();
+	result = prime * result + price;
 	result = prime * result + quantity;
 	return result;
 }
@@ -50,7 +55,7 @@ public boolean equals(Object obj) {
 			return false;
 	} else if (!book.equals(other.book))
 		return false;
-	if (getPrice() != other.getPrice())
+	if (price != other.price)
 		return false;
 	if (quantity != other.quantity)
 		return false;

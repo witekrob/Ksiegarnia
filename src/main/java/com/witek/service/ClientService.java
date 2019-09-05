@@ -1,13 +1,17 @@
 package com.witek.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.witek.dao.ClientDao;
 import com.witek.model.Basket;
 import com.witek.model.Client;
 
 @Service
+@Transactional
 public class ClientService {
 	private ClientDao clientDao;
 	private Client client;
@@ -38,5 +42,12 @@ public class ClientService {
 	public Client getClient() {
 		return client;
 	}
-
+	public void savuj (Client client) {
+		clientDao.save(client);
+	}
+	public List<Basket> getOrderHistory(Client client){
+		client = clientDao.findByEmail(client.getEmail());
+		List<Basket> orderHistory = client.getBasketHistory();
+		return orderHistory;
+	}
 }

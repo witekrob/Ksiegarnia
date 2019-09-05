@@ -1,5 +1,7 @@
 package com.witek.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.witek.model.Basket;
 import com.witek.model.Book;
 import com.witek.model.Client;
 import com.witek.service.ClientService;
@@ -65,10 +68,8 @@ public String login(Model model,String email, String password,HttpServletRequest
 	Client client = clientService.login(email, password);
 	if (client!=null) {
 		System.out.println("valid");
-		
-	//	request.getSession();
-		request.getSession().setAttribute("client", client);
-			
+		//	request.getSession();
+		request.getSession().setAttribute("client", client);	
 		return "index";
 	}
 	String loginResult = ("couldn't find client that match this details" + " " + email + " " + password);

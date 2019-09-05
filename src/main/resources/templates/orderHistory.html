@@ -7,19 +7,28 @@
 
 <body>
 	<div th:insert="/index.html">...</div>
-<div th:if="${orderHistory}">
+	<div th:if="${orderHistory}">
 
-	<h2>twoja historia zamówień</h2>
-	<table border="2px">
-		<tr bgcolor="lightyellow" th:each="basket : ${orderHistory}">
-			<td th:text="${basket.basketItems}"></td>
-		</tr>
+		<h2>twoja historia zamówień</h2>
+		<table border="2px" th:each="basket : ${orderHistory}">
+			<tr>
+				<th>Title</th>
+				<th>Quantity</th>
+				<th>Price</th>
+			</tr>
+			<tr bgcolor="lightyellow"
+				th:each="basketItem : ${basket.basketItems}">
 
-	</table>
+				<td th:text="${basketItem.book.title}"></td>
+				<td th:text="${basketItem.quantity}"></td>
+				<td th:text="${basketItem.price}"></td>
+			</tr>
+
+		</table>
 	</div>
 	<div th:unless="${orderHistory}">
-	<a href="/login">You must log in first</a>
-	
+		<a href="/login">You must log in first</a>
+
 	</div>
 </body>
 

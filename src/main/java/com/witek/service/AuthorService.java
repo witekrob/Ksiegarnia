@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.witek.dao.AuthorDao;
 import com.witek.model.Author;
 import com.witek.model.Book;
 
 @Service
+@Transactional
 public class AuthorService {
 
 	private AuthorDao authorDao;

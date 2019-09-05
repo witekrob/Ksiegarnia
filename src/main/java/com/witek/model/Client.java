@@ -24,8 +24,8 @@ private String password;
 
 
 
-@OneToMany(cascade = CascadeType.ALL)
-private List<Basket> basketHistory = new ArrayList<Basket>();
+@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+private List<Basket> basketHistory;
 
 public Client() {}
 public Client(String name, String surname, String email, String password, int client_id, List<Basket> basketHistory) {
@@ -114,7 +114,7 @@ public boolean equals(Object obj) {
 @Override
 public String toString() {
 	return "Client [client_id=" + client_id + ", name=" + name + ", surname=" + surname + ", email=" + email
-			+ ", password=" + password + ", basketHistory=" + basketHistory + "]";
+			+ ", password=" + password + "  ]";
 }
 public List<Basket> getBasketHistory() {
 	return basketHistory;

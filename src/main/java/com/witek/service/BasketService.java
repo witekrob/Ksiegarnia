@@ -2,28 +2,33 @@ package com.witek.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.witek.dao.BasketDao;
+import com.witek.dao.BasketItemDao;
 import com.witek.model.Basket;
 import com.witek.model.BasketItem;
 import com.witek.model.Book;
 import com.witek.model.Client;
 
 @Service
+@Transactional
 public class BasketService {
 	private Basket basket;
 	private BookService bookService;
 	private List<Basket> orderHistory;
-
+	private BasketItemService basketItemService;
+	private ClientService clientService;
 	@Autowired
-	public BasketService(Basket basket, BookService bookService) {
+	public BasketService(BasketItemService basketItemService, Basket basket, BookService bookService,
+			ClientService clientService) {
 		this.basket = basket;
 		this.bookService = bookService;
 		orderHistory = new ArrayList<Basket>();
-
+		this.basketItemService = basketItemService;
+		this.clientService=clientService;
 	}
 
 	public void addToBasket(Basket basket, BasketItem basketItem) {
@@ -61,21 +66,18 @@ public class BasketService {
 		if (allItemsInBasket != null) {
 			System.out.println("3");
 
-		for (BasketItem item : allItemsInBasket) {
-			System.out.println("4");
-			toEdit = bookService.getById(item.getBook().getId_number());
-			toEdit.setQuantity(toEdit.getQuantity() - item.getQuantity());
-			System.out.println("5   " + toEdit);
-			bookService.saveBook(toEdit);
-		}
-		}
-	}
+			for (BasketItem item : allItemsInBasket) {
+				System.out.println("4");
+				toEdit = bookService.getById(item.getBook().getId_number());
+				toEdit.setQuantity(toEdit.getQuantity() - item.getQuantity());
+				System.out.println("5   " + toEdit);
+				bookService.saveBook(toEdit);
 
-	public List<Basket> addToHistory(Basket basket) {
-		List<Basket> history = basket.getClient().getBasketHistory();
-		System.out.println("i'm making history");
-		history.add(basket);
-		return history;
+			}
+		}
+		basketItemService.saveBasketItem(basket);
+		clientService.addNewClient(basket.getClient());
+//		clientDao.save(basket.getClient());
 	}
 
 	public int overallPrice(Basket basket2) {
