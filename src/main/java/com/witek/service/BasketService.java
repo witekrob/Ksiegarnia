@@ -21,26 +21,28 @@ public class BasketService {
 	private List<Basket> orderHistory;
 	private BasketItemService basketItemService;
 	private ClientService clientService;
+	private BasketDao basketDao;
 	@Autowired
-	public BasketService(BasketItemService basketItemService, Basket basket, BookService bookService,
+	public BasketService(BasketDao basketDao, BasketItemService basketItemService, Basket basket, BookService bookService,
 			ClientService clientService) {
 		this.basket = basket;
 		this.bookService = bookService;
 		orderHistory = new ArrayList<Basket>();
 		this.basketItemService = basketItemService;
 		this.clientService=clientService;
+		this.basketDao=basketDao;
 	}
 
-	public void addToBasket(Basket basket, BasketItem basketItem) {
-		if (basket.getBasketItems() == null) {
-			List<BasketItem> itemy = new ArrayList<BasketItem>();
-			basket.setBasketItems(itemy);
-		}
-		basket.getBasketItems().add(basketItem);
-		System.out.println("dodano do koszyka item: " + basketItem);
-		System.out.println("Zawartość koszyka : " + basket);
+	//public void addToBasket(Basket basket, BasketItem basketItem) {
+		//if (basket.getBasketItems() == null) {
+			//List<BasketItem> itemy = new ArrayList<BasketItem>();
+			//basket.setBasketItems(itemy);
+		//}
+		//basket.getBasketItems().add(basketItem);
+		//System.out.println("dodano do koszyka item: " + basketItem);
+		//System.out.println("Zawartość koszyka : " + basket);
 
-	}
+	//}
 
 	public void clearWholeBasket(Basket basket) {
 		if (basket.getBasketItems() != null)
@@ -72,22 +74,26 @@ public class BasketService {
 				toEdit.setQuantity(toEdit.getQuantity() - item.getQuantity());
 				System.out.println("5   " + toEdit);
 				bookService.saveBook(toEdit);
-
+				
 			}
 		}
-		basketItemService.saveBasketItem(basket);
 		clientService.addNewClient(basket.getClient());
-//		clientDao.save(basket.getClient());
-	}
+		basketItemService.saveBasketItem(basket);
+		saveBasket(basket);
+		
+		}
 
-	public int overallPrice(Basket basket2) {
-		List<BasketItem> itemy = basket2.getBasketItems();
+	public int overallPrice(Basket basket) {
+		List<BasketItem> itemy = basket.getBasketItems();
 		int price = 0;
-
+		
 		for (BasketItem item : itemy) {
 			price = price + item.getPrice();
 		}
 
 		return price;
+	}
+	public void saveBasket(Basket basket) {
+		basketDao.save(basket);
 	}
 }

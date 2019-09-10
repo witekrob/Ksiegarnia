@@ -24,7 +24,7 @@ private String password;
 
 
 
-@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+@OneToMany(cascade = CascadeType.ALL)
 private List<Basket> basketHistory;
 
 public Client() {}

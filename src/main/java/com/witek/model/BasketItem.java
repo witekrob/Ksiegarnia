@@ -28,7 +28,7 @@ public BasketItem(int basketItem_id,Book book, int quantity, int price) {
 	this.book = book;
 	this.quantity= quantity;
 	this.price=price;
-}
+	}
 @Override
 public int hashCode() {
 	final int prime = 31;
@@ -89,5 +89,11 @@ public int getPrice() {
 }
 public void setPrice(int price) {
 	this.price = price;
+}
+public Basket getBasket() {
+	return basket;
+}
+public void setBasket(Basket basket) {
+	this.basket = basket;
 }
 }

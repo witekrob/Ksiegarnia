@@ -22,10 +22,10 @@ public class Basket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int basket_id;
-	@OneToMany(targetEntity=BasketItem.class)
+	@OneToMany(targetEntity=BasketItem.class, cascade=CascadeType.ALL)
 	private List<BasketItem> basketItems;
 
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
+	@ManyToOne(cascade=CascadeType.REFRESH)
 	private Client client;
 	
 	public Basket() {

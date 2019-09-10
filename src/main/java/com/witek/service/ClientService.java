@@ -20,6 +20,7 @@ public class ClientService {
 	public ClientService(ClientDao clientDao) {
 		this.clientDao = clientDao;
 	}
+	
 
 	public void addNewClient(Client client) {
 		String email = client.getEmail();

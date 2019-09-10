@@ -25,13 +25,12 @@ import com.witek.model.Client;
 public class BasketController {
 	private BookService bookService;
 	private BasketService basketService;
-	private Basket basket ;//= new Basket();
+	private Basket basket = new Basket();
 	private int overallPrice= 0;
 	private int price;
 	private List<Basket> orderHistory;
 	private Client client;
 	private ClientService clientService;
-	int basketItem_id = 0;
 
 	@Autowired
 	public BasketController(BookService bookService, BasketService basketService, ClientService clientService) {
@@ -43,29 +42,36 @@ public class BasketController {
 	@PostMapping("/addToBasket")
 	public String addToBasket(HttpServletRequest request, Long id_number, int howMany, Model model) {
 client = 	(Client)request.getSession().getAttribute("client");
-//		client = clientService.getClient();
 		basket = (Basket)request.getSession().getAttribute("basket");
+		List<BasketItem> itemy = new ArrayList<BasketItem>();
 		if (basket==null) {
 			basket= new Basket();
-			basket.setClient(client);
+//		basket= new Basket();
+			//basket.setClient(client);
+		//}
 		}
 		basket.setClient(client);
 		Book book = bookService.getById(id_number);
-
-		//if (basket.getBasketItems() != null) {
-			//int basketSize = basket.getBasketItems().size();
-			//basketItem_id = basketSize;
-		//}
 		howMany = Math.abs(howMany);
 		price = book.getPrice() * howMany;
-		BasketItem basketItem = new BasketItem(basketItem_id, book, howMany, price);
-		basketService.addToBasket(basket, basketItem);
+		
+//		BasketItem basketItem = new BasketItem(0,book, howMany, price);
+		BasketItem basketItem = new BasketItem();
+		basketItem.setBook(book);
+		basketItem.setQuantity(howMany);
+		basketItem.setPrice(price);
+		itemy.add(basketItem);
+		basket.setBasketItems(itemy);
+		//basket.getBasketItems().add(basketItem);
+	
+//		basketService.addToBasket(basket, basketItem);
 		request.getSession().setAttribute("basket", basket);;
 	
 		model.addAttribute("basket", basket);
 		model.addAttribute("client", client);
 		overallPrice = basketService.overallPrice(basket);
-
+		request.getSession().setAttribute("overallPrice", overallPrice);
+		
 		model.addAttribute("overallPrice", overallPrice);
 
 		return "basketContent";
@@ -108,11 +114,10 @@ client = 	(Client)request.getSession().getAttribute("client");
 if (client==null ) {
 	System.out.println("client is NUKLLLL");
 }
-		
+		orderHistory= clientService.getOrderHistory(client);
 		basket.setClient(client);
-		client.getBasketHistory().add(basket);
+		orderHistory.add(basket);
 		basketService.basketProceed(basket);
-		List<Basket> orderHistory = client.getBasketHistory();
 		request.getSession().setAttribute("orderHistory", orderHistory);
 		System.out.println("history made");
 		
@@ -126,9 +131,14 @@ if (client==null ) {
 	@GetMapping("orderHistory")
 	public String orderHistory(Model model, HttpServletRequest request) {
 	Client client = (Client)request.getSession().getAttribute("client");
-		//List<Basket> orderHistory = new ArrayList<Basket>();
+	//orderHistory = (List<Basket>)request.getSession().getAttribute("orderHistory");
+		
+	
+	//List<Basket> orderHistory = new ArrayList<Basket>();
 		//if (client!=null) {
 		orderHistory = clientService.getOrderHistory(client);
+
+		request.getSession().setAttribute("orderHistory", orderHistory);
 		model.addAttribute("orderHistory",orderHistory);
 		return "orderHistory";
 	}
