@@ -18,13 +18,4 @@ public class BasketItemService {
 	public BasketItemService(BasketItemDao basketItemDao) {
 		this.basketItemDao = basketItemDao;
 	}
-
-//	public void saveBasketItem(Basket basket) {
-//
-	//	System.out.println("startt saveBasketItem service");
-		//for (BasketItem item : basket.getBasketItems()) {
-//
-	//		basketItemDao.save(item);
-		//}
-	//}
 }

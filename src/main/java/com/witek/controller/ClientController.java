@@ -38,17 +38,14 @@ public String registration(Client client) {
 	return "registration";
 }
 @PostMapping("/registration")
-public String registration(@Valid Client client,Model model,HttpServletRequest request, BindingResult binding ) {
+public String registration(@ModelAttribute("client")@Valid Client client, BindingResult binding,Model model,HttpServletRequest request) {
 	if(binding.hasErrors()) {
 		System.out.println("błędów a błędów");
-		}
-	//return "registration";
-	
+		return "registration";	
+	}
 	else
-	System.out.println(client);
 	clientService.addNewClient(client);
-	request.getSession();
-	
+	request.getSession().setAttribute("client", client);	
 	model.addAttribute("client",client);
 	return "index";
 	
@@ -66,7 +63,8 @@ public String clientInfo(Model model,HttpServletRequest request) {
 }
 @GetMapping("logout")
 public String logout(HttpServletRequest request) {
-	clientService.logout(request);	System.out.println("log out");
+	clientService.logout(request);	
+	System.out.println("log out");
 	return "index";
 }
 @GetMapping("login")

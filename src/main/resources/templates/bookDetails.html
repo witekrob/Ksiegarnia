@@ -65,8 +65,8 @@ var form2=document.getElementById("howMany");
 <form method="post">
 
 <input type="text" name="title" >New title?<br>
-<input type="number" name="pages" required="required">New pages?<br>
-<input type="number" name="price" required="required" >New price?<br>
+<input type="number" name="pages" required="required" min=0>New pages?<br>
+<input type="number" name="price" required="required"  min=0>New price?<br>
 <input type="number" name="quantity" required="required" >New quantity?<br>
 <input type = "submit">
 </form>
@@ -76,7 +76,7 @@ Dodać do koszyka?
 <form id="basketCheckForm" method="post" action="/addToBasket/">
 
 <input type ="number" th:field="${bookDetail.id_number}" name="id_number" hidden="true">
-<input id="howMany" type="number" name="howMany"  > How many add to basket?<br>
+<input id="howMany" type="number" name="howMany" min=1 step=1 > How many add to basket?<br>
 <input type="submit" id = "submitButton"   onsubmit="check()"> Add to basket<br>
 
 </form>

@@ -10,49 +10,36 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.witek.dao.BasketDao;
-import com.witek.dao.BasketItemDao;
 import com.witek.model.Basket;
 import com.witek.model.BasketItem;
 import com.witek.model.Book;
-import com.witek.model.Client;
 
 @Service
 @Transactional
 public class BasketService {
 	private Basket basket;
 	private BookService bookService;
-	private List<Basket> orderHistory;
-	private BasketItemService basketItemService;
-	private ClientService clientService;
+	ClientService clientService;
 	private BasketDao basketDao;
+
 	@Autowired
-	public BasketService(BasketDao basketDao, BasketItemService basketItemService, Basket basket, BookService bookService,
-			ClientService clientService) {
+	public BasketService(BasketDao basketDao, Basket basket,
+			BookService bookService, ClientService clientService) {
 		this.basket = basket;
 		this.bookService = bookService;
-		orderHistory = new ArrayList<Basket>();
-		this.basketItemService = basketItemService;
-		this.clientService=clientService;
-		this.basketDao=basketDao;
+		this.clientService = clientService;
+		this.basketDao = basketDao;
 	}
-	public BasketService() {}
 
-	//public void addToBasket(Basket basket, BasketItem basketItem) {
-		//if (basket.getBasketItems() == null) {
-			//List<BasketItem> itemy = new ArrayList<BasketItem>();
-			//basket.setBasketItems(itemy);
-		//}
-		//basket.getBasketItems().add(basketItem);
-		//System.out.println("dodano do koszyka item: " + basketItem);
-		//System.out.println("Zawartość koszyka : " + basket);
-
-	//}
+	public BasketService() {
+	}
 
 	public Basket clearWholeBasket(Basket basket) {
-	basket = new Basket();
-	List<BasketItem>itemy = new ArrayList<BasketItem>();
-	basket.setBasketItems(itemy);
-	return basket;
+		basket = new Basket();
+		List<BasketItem> itemy = new ArrayList<BasketItem>();
+		itemy = null;
+		basket.setBasketItems(itemy);
+		return basket;
 	}
 
 	public int sumPrice(BasketItem basketItem) {
@@ -66,15 +53,17 @@ public class BasketService {
 		basket.getBasketItems().remove(itemId);
 	}
 
-	//public void basketProceed(Basket basket) {
-	public void basketProceed(HttpServletRequest request) {
-			
-	Basket basket =(Basket) request.getSession().getAttribute("basket");
+	public boolean basketProceed(HttpServletRequest request) {
+
+		Basket basket = (Basket) request.getSession().getAttribute("basket");
 		System.out.println("zaczynam realizowac zamowienie");
 		List<BasketItem> allItemsInBasket = basket.getBasketItems();
 		Book toEdit = new Book();
 
-		if (allItemsInBasket != null) {
+		if (allItemsInBasket==null) {
+			return false;
+		}
+		else {
 			System.out.println("3");
 
 			for (BasketItem item : allItemsInBasket) {
@@ -83,25 +72,24 @@ public class BasketService {
 				toEdit.setQuantity(toEdit.getQuantity() - item.getQuantity());
 				System.out.println("5   " + toEdit);
 				bookService.saveBook(toEdit);
-				
+				clientService.addNewClient(basket.getClient());
+				saveBasket(basket);
+				return true;
 			}
 		}
-		clientService.addNewClient(basket.getClient());
-		//basketItemService.saveBasketItem(basket);
-		saveBasket(basket);
-		
-		}
+		return false;
+	}
 
 	public int overallPrice(Basket basket) {
 		List<BasketItem> itemy = basket.getBasketItems();
 		int price = 0;
-		
+
 		for (BasketItem item : itemy) {
 			price = price + item.getPrice();
 		}
-
 		return price;
 	}
+
 	public void saveBasket(Basket basket) {
 		basketDao.save(basket);
 	}

@@ -12,15 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.witek.dao.ClientDao;
 import com.witek.model.Basket;
 import com.witek.model.BasketItem;
 import com.witek.model.Book;
 import com.witek.service.BasketService;
 import com.witek.service.BookService;
 import com.witek.service.ClientService;
-
-import net.bytebuddy.matcher.ModifierMatcher.Mode;
 
 import com.witek.model.Client;
 
@@ -82,21 +79,15 @@ basket = (Basket)request.getSession().getAttribute("basket");
 	@GetMapping("/clearWholeBasket")
 	public String clearWholeBasket(HttpServletRequest request,Model model) {
 		Client client = (Client) request.getSession().getAttribute("client");
-		Basket basket=(Basket)request.getSession().getAttribute("basket");
-		
-		
+	//	Basket basket=(Basket)request.getSession().getAttribute("basket");
 		model.addAttribute("client",client);
 		System.out.println("Zaczynam czyscic koszyk");
-		//System.out.println(basket.getBasketItems());
-		//basket = basketService.clearWholeBasket(basket);
-		//basket.getBasketItems().clear();
-		request.getSession().setAttribute("basket",basket);
-
-		basket = new Basket();
+		basket = basketService.clearWholeBasket(basket);
 		overallPrice = 0;
 		itemsInBasket = new ArrayList<BasketItem>();
-		request.getSession().setAttribute("overallPrice",overallPrice);
+		
 		request.getSession().setAttribute("basket",basket);
+		request.getSession().setAttribute("overallPrice",overallPrice);
 		
 		String message = "Koszyk wyczyszczony";
 		model.addAttribute("message",message);
@@ -121,12 +112,12 @@ basket = (Basket)request.getSession().getAttribute("basket");
 		Client client = (Client)request.getSession().getAttribute("client");
 		String message=null;
 		orderHistory= clientService.getOrderHistory(client);
-		if (basket!=null) {
 			
 		basket.setClient(client);
-		orderHistory.add(basket);
-		basketService.basketProceed(request);
+		boolean proceed = basketService.basketProceed(request);
 		
+		if (proceed==true) {
+		orderHistory.add(basket);
 		request.getSession().setAttribute("orderHistory", orderHistory);
 		System.out.println("history made");
 		basket = new Basket();

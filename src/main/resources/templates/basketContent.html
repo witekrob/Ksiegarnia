@@ -32,7 +32,7 @@
 					<form method="post" action="/changeItemQuantity">
 						<input type="number" th:value="${basketItem.basketItem_id}"
 							name="basketItem_id" hidden="hidden"> <input
-							type="number" name="newQuantity"> <input type="submit">
+							type="number" name="newQuantity" min=0 step=1> <input type="submit">
 					</form>
 				</td>
 			</tr>
