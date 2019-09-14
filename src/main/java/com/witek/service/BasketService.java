@@ -2,6 +2,9 @@ package com.witek.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +35,7 @@ public class BasketService {
 		this.clientService=clientService;
 		this.basketDao=basketDao;
 	}
+	public BasketService() {}
 
 	//public void addToBasket(Basket basket, BasketItem basketItem) {
 		//if (basket.getBasketItems() == null) {
@@ -44,9 +48,11 @@ public class BasketService {
 
 	//}
 
-	public void clearWholeBasket(Basket basket) {
-		if (basket.getBasketItems() != null)
-			basket.getBasketItems().clear();
+	public Basket clearWholeBasket(Basket basket) {
+	basket = new Basket();
+	List<BasketItem>itemy = new ArrayList<BasketItem>();
+	basket.setBasketItems(itemy);
+	return basket;
 	}
 
 	public int sumPrice(BasketItem basketItem) {
@@ -60,7 +66,10 @@ public class BasketService {
 		basket.getBasketItems().remove(itemId);
 	}
 
-	public void basketProceed(Basket basket) {
+	//public void basketProceed(Basket basket) {
+	public void basketProceed(HttpServletRequest request) {
+			
+	Basket basket =(Basket) request.getSession().getAttribute("basket");
 		System.out.println("zaczynam realizowac zamowienie");
 		List<BasketItem> allItemsInBasket = basket.getBasketItems();
 		Book toEdit = new Book();
@@ -78,7 +87,7 @@ public class BasketService {
 			}
 		}
 		clientService.addNewClient(basket.getClient());
-		basketItemService.saveBasketItem(basket);
+		//basketItemService.saveBasketItem(basket);
 		saveBasket(basket);
 		
 		}

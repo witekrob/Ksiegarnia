@@ -1,21 +1,26 @@
 package com.witek.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.witek.model.Basket;
+import com.witek.model.BasketItem;
 import com.witek.model.Book;
 import com.witek.model.Client;
+import com.witek.service.BasketService;
 import com.witek.service.ClientService;
 
 @Controller
@@ -29,14 +34,21 @@ public ClientController(ClientService clientService) {
 
 	
 @GetMapping("registration")
-public String registration() {
+public String registration(Client client) {
 	return "registration";
 }
-@PostMapping("registration")
-public String registration(Model model, @ModelAttribute Client client,HttpServletRequest request ) {
+@PostMapping("/registration")
+public String registration(@Valid Client client,Model model,HttpServletRequest request, BindingResult binding ) {
+	if(binding.hasErrors()) {
+		System.out.println("błędów a błędów");
+		}
+	//return "registration";
+	
+	else
 	System.out.println(client);
 	clientService.addNewClient(client);
 	request.getSession();
+	
 	model.addAttribute("client",client);
 	return "index";
 	
@@ -54,8 +66,7 @@ public String clientInfo(Model model,HttpServletRequest request) {
 }
 @GetMapping("logout")
 public String logout(HttpServletRequest request) {
-	request.getSession().invalidate();
-	System.out.println("log out");
+	clientService.logout(request);	System.out.println("log out");
 	return "index";
 }
 @GetMapping("login")
@@ -67,8 +78,7 @@ public String login(Model model,String email, String password,HttpServletRequest
 	System.out.println(email + " " +  password);
 	Client client = clientService.login(email, password);
 	if (client!=null) {
-		System.out.println("valid");
-		//	request.getSession();
+		System.out.println("valid");		
 		request.getSession().setAttribute("client", client);	
 		return "index";
 	}

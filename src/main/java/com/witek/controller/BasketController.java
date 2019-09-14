@@ -19,13 +19,18 @@ import com.witek.model.Book;
 import com.witek.service.BasketService;
 import com.witek.service.BookService;
 import com.witek.service.ClientService;
+
+import net.bytebuddy.matcher.ModifierMatcher.Mode;
+
 import com.witek.model.Client;
 
 @Controller
 public class BasketController {
 	private BookService bookService;
 	private BasketService basketService;
-	private Basket basket = new Basket();
+	private Basket basket;// = new Basket();
+	List<BasketItem> itemsInBasket;
+	
 	private int overallPrice= 0;
 	private int price;
 	private List<Basket> orderHistory;
@@ -42,29 +47,26 @@ public class BasketController {
 	@PostMapping("/addToBasket")
 	public String addToBasket(HttpServletRequest request, Long id_number, int howMany, Model model) {
 client = 	(Client)request.getSession().getAttribute("client");
-		basket = (Basket)request.getSession().getAttribute("basket");
-		List<BasketItem> itemy = new ArrayList<BasketItem>();
+basket = (Basket)request.getSession().getAttribute("basket");
 		if (basket==null) {
+			itemsInBasket = new ArrayList<BasketItem>();
+			
 			basket= new Basket();
-//		basket= new Basket();
-			//basket.setClient(client);
-		//}
+			basket.setClient(client);
+			overallPrice=0;
 		}
-		basket.setClient(client);
 		Book book = bookService.getById(id_number);
 		howMany = Math.abs(howMany);
 		price = book.getPrice() * howMany;
 		
-//		BasketItem basketItem = new BasketItem(0,book, howMany, price);
 		BasketItem basketItem = new BasketItem();
 		basketItem.setBook(book);
 		basketItem.setQuantity(howMany);
 		basketItem.setPrice(price);
-		itemy.add(basketItem);
-		basket.setBasketItems(itemy);
-		//basket.getBasketItems().add(basketItem);
-	
-//		basketService.addToBasket(basket, basketItem);
+		int basketItemId = 0;
+		basketItem.setBasketItem_id(basketItemId++);
+		itemsInBasket.add(basketItem);
+		basket.setBasketItems(itemsInBasket);
 		request.getSession().setAttribute("basket", basket);;
 	
 		model.addAttribute("basket", basket);
@@ -78,30 +80,36 @@ client = 	(Client)request.getSession().getAttribute("client");
 	}
 
 	@GetMapping("/clearWholeBasket")
-	public String clearWholeBasket(HttpServletRequest request) {
+	public String clearWholeBasket(HttpServletRequest request,Model model) {
+		Client client = (Client) request.getSession().getAttribute("client");
+		Basket basket=(Basket)request.getSession().getAttribute("basket");
+		
+		
+		model.addAttribute("client",client);
 		System.out.println("Zaczynam czyscic koszyk");
-		// basket = basketService.removeEverything();
-		System.out.println(basket.getBasketItems());
-		System.out.println("wyczyszczony koszyk");			
-		basket = new Basket();
+		//System.out.println(basket.getBasketItems());
+		//basket = basketService.clearWholeBasket(basket);
+		//basket.getBasketItems().clear();
 		request.getSession().setAttribute("basket",basket);
 
+		basket = new Basket();
 		overallPrice = 0;
-		return "basketContent";
+		itemsInBasket = new ArrayList<BasketItem>();
+		request.getSession().setAttribute("overallPrice",overallPrice);
+		request.getSession().setAttribute("basket",basket);
+		
+		String message = "Koszyk wyczyszczony";
+		model.addAttribute("message",message);
+		return "index";
 	}
 	@GetMapping("basketContent")
 	public String basketContent(Model model, HttpServletRequest request) {
 		Client client = (Client) request.getSession().getAttribute("client");
-		overallPrice = (int)request.getSession().getAttribute("overallPrice");	
+		
 		Basket basket=(Basket)request.getSession().getAttribute("basket");
-		
-		if (client != null) {
-			model.addAttribute("client", client);
-			//basket.setClient(client);
-		}
-		
+		model.addAttribute("client", client);
 		model.addAttribute("basket", basket);
-		model.addAttribute("price", price);
+		System.out.println(basket);
 		model.addAttribute("overallPrice", overallPrice);
 
 		return "basketContent";
@@ -111,47 +119,56 @@ client = 	(Client)request.getSession().getAttribute("client");
 	public String basketProceed(Model model, HttpServletRequest request) {
 		Basket basket = (Basket)request.getSession().getAttribute("basket");
 		Client client = (Client)request.getSession().getAttribute("client");
-if (client==null ) {
-	System.out.println("client is NUKLLLL");
-}
+		String message=null;
 		orderHistory= clientService.getOrderHistory(client);
+		if (basket!=null) {
+			
 		basket.setClient(client);
 		orderHistory.add(basket);
-		basketService.basketProceed(basket);
+		basketService.basketProceed(request);
+		
 		request.getSession().setAttribute("orderHistory", orderHistory);
 		System.out.println("history made");
-		
 		basket = new Basket();
-		request.getSession().setAttribute("overallPrice",0);
+		overallPrice = 0;
+		itemsInBasket = new ArrayList<BasketItem>();
+		request.getSession().setAttribute("overallPrice",overallPrice);
 		request.getSession().setAttribute("basket",basket);
-			
+		message = "Wszystko poszło dobrze";
+		}
+		else {
+			message= "Nie dodano nic do koszyka";
+		}
+		
+		model.addAttribute("message",message);
 		return "index";
 	}
 
 	@GetMapping("orderHistory")
 	public String orderHistory(Model model, HttpServletRequest request) {
 	Client client = (Client)request.getSession().getAttribute("client");
-	//orderHistory = (List<Basket>)request.getSession().getAttribute("orderHistory");
-		
 	
-	//List<Basket> orderHistory = new ArrayList<Basket>();
-		//if (client!=null) {
+	if (client!=null) {
 		orderHistory = clientService.getOrderHistory(client);
-
+	}
 		request.getSession().setAttribute("orderHistory", orderHistory);
+		model.addAttribute("client",client);
 		model.addAttribute("orderHistory",orderHistory);
 		return "orderHistory";
 	}
 
 	@PostMapping("changeItemQuantity")
-	public String remove1fromBasket(int newQuantity, int basketItem_id, Model model) {
+	public String remove1fromBasket(int newQuantity, int basketItem_id, Model model, HttpServletRequest request) {
 		System.out.println("basketItem_id: " + basketItem_id + "new quantity : " + newQuantity);
+		Basket basket=(Basket)request.getSession().getAttribute("basket");
+		Client client = (Client)request.getSession().getAttribute("client");
 		BasketItem itemToChange = basket.getBasketItems().get(basketItem_id);
 		itemToChange.setQuantity(newQuantity);
 		int newPrice = itemToChange.getQuantity() * itemToChange.getBook().getPrice();
 		itemToChange.setPrice(newPrice);
 		overallPrice = basketService.overallPrice(basket);
 		model.addAttribute("basket", basket);
+		model.addAttribute("client",client);
 		model.addAttribute("overallPrice", overallPrice);
 		
 		return "basketContent";

@@ -8,8 +8,8 @@
 <body>
 
 	<div th:insert="/index.html">...</div>
-	<div th:if="${basket}">
-		<table border="4p">
+	<div >
+		<table  th:if="${basket}" border="4p">
 			<tr>
 				<th>Title</th>
 				<th>Author surname</th>
@@ -42,18 +42,21 @@
 			</tr>
 		</table>
 	</div>
+	
 	<div th:if="${basket}">
 		<form action="/clearWholeBasket" method="get">
 			<input type="submit" value="Remove everything from basket">
 		</form>
 	</div>
+
 	<div th:if="${client}">
 		<form action="/basketProceed" method="POST">
 			<input type="submit" value="Proceed">
 		</form>
-		</div>
-		<div th:unless="${client}" ><a href="/login">You must log in</a>
-		
+	</div>
+
+	<div th:unless="${client}">
+		<a href="/login">You must log in</a>
 	</div>
 
 </body>

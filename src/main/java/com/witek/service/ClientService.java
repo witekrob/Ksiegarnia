@@ -1,6 +1,9 @@
 package com.witek.service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.witek.dao.ClientDao;
 import com.witek.model.Basket;
+import com.witek.model.BasketItem;
 import com.witek.model.Client;
 
 @Service
@@ -50,5 +54,11 @@ public class ClientService {
 		client = clientDao.findByEmail(client.getEmail());
 		List<Basket> orderHistory = client.getBasketHistory();
 		return orderHistory;
+	}
+
+
+	public void logout(HttpServletRequest request) {
+		request.getSession().invalidate();
+		System.out.println("log out");
 	}
 }

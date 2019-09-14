@@ -10,6 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.Constraint;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Max;
 
 @Entity
 public class Client {
@@ -17,9 +23,16 @@ public class Client {
 @Id
 @GeneratedValue(strategy=GenerationType.IDENTITY)
 private int client_id;
+@NotNull
+@Size(min=3,max=20)
 private String name;
+@NotNull
+@Size(min=3,max=20)
 private String surname;
+@Email
+@NotNull
 private String email;
+@Size(min=3,max=20)
 private String password;
 
 
