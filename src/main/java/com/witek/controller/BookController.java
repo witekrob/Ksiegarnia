@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.witek.model.Author;
 import com.witek.model.Book;
+import com.witek.model.Client;
+import com.witek.model.Role;
 import com.witek.service.AuthorService;
 import com.witek.service.BookService;
 
@@ -38,9 +41,14 @@ public class BookController {
 	}
 
 	@GetMapping("/bookDetails")
-	public String getAll(Model model) {
+	public String getAll(Model model, HttpServletRequest request) {
+		Client client = (Client)request.getSession().getAttribute("client");
+	if (client.getRole()==null) {
+		client.setRole(Role.UNKNOWN);
+	}
 		allAuthors = authorService.getAll();
 		model.addAttribute("allAuthors", allAuthors);
+		model.addAttribute("client",client);
 
 		return "showAll";
 	}

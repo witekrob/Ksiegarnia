@@ -13,6 +13,7 @@ import com.witek.dao.ClientDao;
 import com.witek.model.Basket;
 import com.witek.model.BasketItem;
 import com.witek.model.Client;
+import com.witek.model.Role;
 
 @Service
 @Transactional
@@ -30,6 +31,9 @@ public class ClientService {
 		String email = client.getEmail();
 		Client check = clientDao.findByEmail(email);
 		if (check == null) {
+			if (client.getRole()==null) {
+				client.setRole(Role.CLIENT);
+			}
 			clientDao.save(client);
 		}
 	}
@@ -47,9 +51,9 @@ public class ClientService {
 	public Client getClient() {
 		return client;
 	}
-	public void savuj (Client client) {
-		clientDao.save(client);
-	}
+//	public void savuj (Client client) {
+	//	clientDao.save(client);
+	//}
 	public List<Basket> getOrderHistory(Client client){
 		client = clientDao.findByEmail(client.getEmail());
 		List<Basket> orderHistory = client.getBasketHistory();

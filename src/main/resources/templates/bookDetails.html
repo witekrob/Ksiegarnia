@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Show details about book</title>
 
-<script>
+<!--<script>
 function check(){
 var howMany=document.forms["basketCheckForm"]["howMany"];
 var form2=document.getElementById("howMany");
@@ -14,7 +14,7 @@ var form2=document.getElementById("howMany");
 }
 
 </script>
-
+!-->
 
 </head>
 
@@ -60,6 +60,8 @@ var form2=document.getElementById("howMany");
 
 </table>
 
+
+<div th:if="${client.role.toString() == 'ADMIN'}">
 <h2> Czy chcesz zmienic jakies dane?</h2>
 
 <form method="post">
@@ -70,7 +72,7 @@ var form2=document.getElementById("howMany");
 <input type="number" name="quantity" required="required" >New quantity?<br>
 <input type = "submit">
 </form>
-
+</div>
 
 Dodać do koszyka?
 <form id="basketCheckForm" method="post" action="/addToBasket/">

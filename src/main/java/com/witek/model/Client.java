@@ -1,6 +1,7 @@
 package com.witek.model;
 import com.witek.model.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Constraint;
@@ -16,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
-
+import javax.persistence.JoinColumn;
 @Entity
 public class Client {
 
@@ -34,20 +37,20 @@ private String surname;
 private String email;
 @Size(min=3,max=20)
 private String password;
-
-
+private Role role;
 
 @OneToMany(cascade = CascadeType.ALL)
 private List<Basket> basketHistory;
 
 public Client() {}
-public Client(String name, String surname, String email, String password, int client_id, List<Basket> basketHistory) {
+public Client(String name, String surname, String email, String password, int client_id, List<Basket> basketHistory, Role role) {
 	this.client_id=client_id;
 	this.email=email;
 	this.name=name;
 	this.surname=surname;
 	this.password=password;
 	this.basketHistory=basketHistory;
+	this.role=role;
 }
 
 public int getClient_id() {
@@ -127,13 +130,19 @@ public boolean equals(Object obj) {
 @Override
 public String toString() {
 	return "Client [client_id=" + client_id + ", name=" + name + ", surname=" + surname + ", email=" + email
-			+ ", password=" + password + "  ]";
+			+ ", password=" + password + ", role = " + role + "  ]";
 }
 public List<Basket> getBasketHistory() {
 	return basketHistory;
 }
 public void setBasketHistory(List<Basket> basketHistory) {
 	this.basketHistory = basketHistory;
+}
+public Role getRole() {
+	return role;
+}
+public void setRole(Role role) {
+	this.role = role;
 }
 	
 
