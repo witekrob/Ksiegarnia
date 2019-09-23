@@ -13,6 +13,7 @@ import com.witek.dao.BasketDao;
 import com.witek.model.Basket;
 import com.witek.model.BasketItem;
 import com.witek.model.Book;
+import com.witek.model.Client;
 
 @Service
 @Transactional
@@ -59,7 +60,8 @@ public class BasketService {
 		System.out.println("zaczynam realizowac zamowienie");
 		List<BasketItem> allItemsInBasket = basket.getBasketItems();
 		Book toEdit = new Book();
-
+		Client client = basket.getClient();
+		List<Basket> history = clientService.getOrderHistory(client);
 		if (allItemsInBasket==null) {
 			return false;
 		}
@@ -72,7 +74,11 @@ public class BasketService {
 				toEdit.setQuantity(toEdit.getQuantity() - item.getQuantity());
 				System.out.println("5   " + toEdit);
 				bookService.saveBook(toEdit);
-				clientService.addNewClient(basket.getClient());
+				
+				history.add(basket);
+				client.setBasketHistory(history);
+				System.out.println(client.getBasketHistory());
+				clientService.addNewClient(client);
 				saveBasket(basket);
 				return true;
 			}

@@ -57,6 +57,7 @@ public class ClientService {
 	public List<Basket> getOrderHistory(Client client){
 		client = clientDao.findByEmail(client.getEmail());
 		List<Basket> orderHistory = client.getBasketHistory();
+		System.out.println(orderHistory);
 		return orderHistory;
 	}
 

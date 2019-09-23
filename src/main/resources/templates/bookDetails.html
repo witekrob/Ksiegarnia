@@ -20,67 +20,68 @@ var form2=document.getElementById("howMany");
 
 <body>
 
-<div th:insert="/index.html" >...</div>
-<table border="2px">
-<tr bordercolor="black" style="font-size: 40px" align="justify">
-<th>Title</th>
-<th> Pages</th>
-<th> Price</th>
-<th> Id number</th>
-<th> Quantities</th>
-</tr>
-<tr bgcolor="yellow"   style="font-size: 30px"  align="justify">
-<td th:text= "${bookDetail.title}"></td>
-<td th:text= "${bookDetail.pages}"></td>
-<td th:text= "${bookDetail.price}"></td>
-<td th:text="${bookDetail.id_number}"></td>
-<td th:text="${bookDetail.quantity}"></td>
-</tr>
-</table>
+	<div th:insert="/index.html">...</div>
+	<table border="2px">
+		<tr bordercolor="black" style="font-size: 40px" align="justify">
+			<th>Title</th>
+			<th>Pages</th>
+			<th>Price</th>
+			<th>Id number</th>
+			<th>Quantities</th>
+		</tr>
+		<tr bgcolor="yellow" style="font-size: 30px" align="justify">
+			<td th:text="${bookDetail.title}"></td>
+			<td th:text="${bookDetail.pages}"></td>
+			<td th:text="${bookDetail.price}"></td>
+			<td th:text="${bookDetail.id_number}"></td>
+			<td th:text="${bookDetail.quantity}"></td>
+		</tr>
+	</table>
 
-<table border="2px">
-<tr bordercolor="black" style="font-size: 40px" align="justify">
-<th>Name</th>
-<th>Surname</th>
-<th>Country</th>
-<th>YOB</th>
-<th>Author_id</th>
-
-
-
-</tr>
-<tr bgcolor="yellow"   style="font-size: 30px"  align="justify">
-<td th:text= "${bookDetail.author.name}"></td>
-<td th:text= "${bookDetail.author.surname}"></td>
-<td th:text= "${bookDetail.author.country}"></td>
-<td th:text="${bookDetail.author.yearOfBirth}"></td>
-<td th:text="${bookDetail.author.author_id}"></td>
-</tr>
+	<table border="2px">
+		<tr bordercolor="black" style="font-size: 40px" align="justify">
+			<th>Name</th>
+			<th>Surname</th>
+			<th>Country</th>
+			<th>YOB</th>
+			<th>Author_id</th>
 
 
-</table>
+
+		</tr>
+		<tr bgcolor="yellow" style="font-size: 30px" align="justify">
+			<td th:text="${bookDetail.author.name}"></td>
+			<td th:text="${bookDetail.author.surname}"></td>
+			<td th:text="${bookDetail.author.country}"></td>
+			<td th:text="${bookDetail.author.yearOfBirth}"></td>
+			<td th:text="${bookDetail.author.author_id}"></td>
+		</tr>
+	</table>
 
 
-<div th:if="${client.role.toString() == 'ADMIN'}">
-<h2> Czy chcesz zmienic jakies dane?</h2>
+	<div th:if="${client.role.toString()=='ADMIN'}">
+		<h2>Czy chcesz zmienic jakies dane?</h2>
 
-<form method="post">
+		<form method="post">
 
-<input type="text" name="title" >New title?<br>
-<input type="number" name="pages" required="required" min=0>New pages?<br>
-<input type="number" name="price" required="required"  min=0>New price?<br>
-<input type="number" name="quantity" required="required" >New quantity?<br>
-<input type = "submit">
-</form>
-</div>
+			<input type="text" name="title">New title?<br> <input
+				type="number" name="pages" required="required" min=0>New
+			pages?<br> <input type="number" name="price" required="required"
+				min=0>New price?<br> <input type="number"
+				name="quantity" required="required">New quantity?<br>
+			<input type="submit">
+		</form>
+	</div>
 
-Dodać do koszyka?
-<form id="basketCheckForm" method="post" action="/addToBasket/">
+	Dodać do koszyka?
+	<form id="basketCheckForm" method="post" action="/addToBasket/">
 
-<input type ="number" th:field="${bookDetail.id_number}" name="id_number" hidden="true">
-<input id="howMany" type="number" name="howMany" min=1 step=1 > How many add to basket?<br>
-<input type="submit" id = "submitButton"   onsubmit="check()"> Add to basket<br>
+		<input type="number" th:field="${bookDetail.id_number}"
+			name="id_number" hidden="true"> <input id="howMany"
+			type="number" name="howMany" min=1 step=1> How many add to
+		basket?<br> <input type="submit" id="submitButton"
+			onsubmit="check()"> Add to basket<br>
 
-</form>
+	</form>
 </body>
 </html>

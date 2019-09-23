@@ -41,21 +41,27 @@ public class BookController {
 	}
 
 	@GetMapping("/bookDetails")
-	public String getAll(Model model, HttpServletRequest request) {
-		Client client = (Client)request.getSession().getAttribute("client");
-	if (client.getRole()==null) {
-		client.setRole(Role.UNKNOWN);
-	}
+	public String getAll(Model model) {
 		allAuthors = authorService.getAll();
 		model.addAttribute("allAuthors", allAuthors);
-		model.addAttribute("client",client);
 
 		return "showAll";
 	}
 
 	@GetMapping("/bookDetails/{id}")
-	public String bookDetails(@PathVariable Long id, Model model) {
+	public String bookDetails(@PathVariable Long id, Model model, HttpServletRequest request) {
 		Book bookDetail = bookService.getById(id);
+
+		Client client = (Client) request.getSession().getAttribute("client");
+		if (client!=null) {
+			model.addAttribute("client",client);
+			}
+		else {
+			client = new Client();
+				client.setRole(Role.UNKNOWN);
+				model.addAttribute("client",client);
+				
+		}
 		model.addAttribute("bookDetail", bookDetail);
 		return "bookDetails";
 	}

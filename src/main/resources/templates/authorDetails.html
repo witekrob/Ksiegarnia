@@ -43,7 +43,7 @@
 
 </tr>
 </table>
-
+<div th:if="${client.role.toString()=='ADMIN'}">"
 <h2> Czy chcesz zmienic jakies dane?</h2>
 
 <form method="post">
@@ -54,5 +54,6 @@
 <input type="number" name="yearOfBirth" min=0 max=2019 required="required" >New year of birth?<br>
 <input type = "submit">
 </form>
+</div>
 </body>
 </html>

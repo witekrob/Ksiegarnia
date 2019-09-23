@@ -3,6 +3,8 @@ package com.witek.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.witek.model.Author;
+import com.witek.model.Client;
+import com.witek.model.Role;
 import com.witek.service.AuthorService;
 
 @Controller
@@ -30,10 +34,21 @@ public class AuthorController {
 	}
 
 	@GetMapping("/authorDetails/{author_id}")
-	public String getAuthorDetails(@PathVariable Long author_id, Model model) {
+	public String getAuthorDetails(@PathVariable Long author_id, Model model, HttpServletRequest request) {
 		System.out.println("NUMER AUTORA :  " + author_id);
 		Author author = authorService.getById(author_id);
 		System.out.println(author);
+		Client client = (Client)request.getSession().getAttribute("client");
+		
+		if (client!=null) {
+			model.addAttribute("client",client);
+			}
+		else {
+			client = new Client();
+				client.setRole(Role.UNKNOWN);
+				model.addAttribute("client",client);
+				
+		}
 		model.addAttribute("author", author);
 		return "authorDetails";
 	}

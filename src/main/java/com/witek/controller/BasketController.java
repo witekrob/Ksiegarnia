@@ -117,8 +117,10 @@ basket = (Basket)request.getSession().getAttribute("basket");
 		boolean proceed = basketService.basketProceed(request);
 		
 		if (proceed==true) {
-		orderHistory.add(basket);
-		request.getSession().setAttribute("orderHistory", orderHistory);
+		//orderHistory.add(basket);
+		//client.setBasketHistory(orderHistory);
+		System.out.println(orderHistory);
+		//request.getSession().setAttribute("orderHistory", orderHistory);
 		System.out.println("history made");
 		basket = new Basket();
 		overallPrice = 0;
