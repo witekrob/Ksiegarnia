@@ -51,9 +51,7 @@ public class ClientService {
 	public Client getClient() {
 		return client;
 	}
-//	public void savuj (Client client) {
-	//	clientDao.save(client);
-	//}
+
 	public List<Basket> getOrderHistory(Client client){
 		client = clientDao.findByEmail(client.getEmail());
 		List<Basket> orderHistory = client.getBasketHistory();

@@ -55,6 +55,7 @@ var form2=document.getElementById("howMany");
 			<td th:text="${bookDetail.author.country}"></td>
 			<td th:text="${bookDetail.author.yearOfBirth}"></td>
 			<td th:text="${bookDetail.author.author_id}"></td>
+			<td><a th:href="@{'/authorDetails/' + ${bookDetail.author.author_id}}">Details</a></td>
 		</tr>
 	</table>
 
@@ -64,11 +65,10 @@ var form2=document.getElementById("howMany");
 
 		<form method="post">
 
-			<input type="text" name="title">New title?<br> <input
-				type="number" name="pages" required="required" min=0>New
-			pages?<br> <input type="number" name="price" required="required"
-				min=0>New price?<br> <input type="number"
-				name="quantity" required="required">New quantity?<br>
+			<input type="text" name="title">New title?<br> 
+			<input	type="number" name="pages" required="required" min=0 step=1>	New	pages?<br>
+			<input type="number" name="price" required="required" min=0 step=1>New price?<br>
+			 <input type="number" name="quantity" min="0" step=1 required="required">New quantity?<br>
 			<input type="submit">
 		</form>
 	</div>

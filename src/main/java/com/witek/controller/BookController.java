@@ -67,13 +67,14 @@ public class BookController {
 	}
 
 	@PostMapping("/bookDetails/{id}")
-	public String editBookDetails(@PathVariable Long id, Book newBookDetails, Model model) {
-
+	public String editBookDetails(@PathVariable Long id, Book newBookDetails, Model model, HttpServletRequest request) {
+Client client = (Client)request.getSession().getAttribute("client");
 		Book bookToEdit = bookService.getById(id);
 		System.out.println("book to edit : " + bookToEdit);
 		bookToEdit = bookService.editBook(bookToEdit, newBookDetails);
 		bookService.saveBook(bookToEdit);
 		model.addAttribute("bookDetail", bookToEdit);
+		model.addAttribute("client",client);
 		return "bookDetails";
 	}
 

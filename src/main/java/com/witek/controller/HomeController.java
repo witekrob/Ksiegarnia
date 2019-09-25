@@ -18,16 +18,10 @@ import com.witek.model.Client;
 @Controller
 public class HomeController {
 
-	private AuthorService authorService;
-	private BookService bookService;
-	private List<Author> allAuthors = new ArrayList<Author>();
 
 	@Autowired
-	public HomeController(BookService bookService, AuthorService authorService) {
-		this.authorService = authorService;
-		this.bookService = bookService;
+	public HomeController() {
 	}
-
 	@GetMapping("/")
 	public String goHome(HttpServletRequest request, Client client, Model model) {
 		client = (Client)request.getSession().getAttribute("client");
