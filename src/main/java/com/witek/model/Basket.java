@@ -1,6 +1,7 @@
 package com.witek.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -27,19 +28,21 @@ public class Basket {
 
 	@ManyToOne(cascade=CascadeType.REFRESH)
 	private Client client;
-	
+	private Date date;
 	public Basket() {
 	}
 
-	public Basket(Client client,int basket_id, List<BasketItem> basketItems) {
+	public Basket(Client client,int basket_id, List<BasketItem> basketItems, Date date) {
 		this.basket_id = basket_id;
 		this.basketItems = basketItems;
 		this.client=client;
+		this.date=date;
 	}
 
 	@Override
 	public String toString() {
-		return "Basket [basket_id=" + basket_id + ", basketItems=" + basketItems + "]";
+		return "Basket [basket_id=" + basket_id + ", basketItems=" + basketItems + ", client=" + client + ", date="
+				+ date + "]";
 	}
 
 	@Override
@@ -94,6 +97,14 @@ public class Basket {
 
 	public void setClient(Client client) {
 		this.client = client;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setData(Date date) {
+		this.date = date;
 	}
 
 }

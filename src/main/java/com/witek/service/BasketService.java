@@ -24,8 +24,7 @@ public class BasketService {
 	private BasketDao basketDao;
 
 	@Autowired
-	public BasketService(BasketDao basketDao, Basket basket,
-			BookService bookService, ClientService clientService) {
+	public BasketService(BasketDao basketDao, Basket basket, BookService bookService, ClientService clientService) {
 		this.basket = basket;
 		this.bookService = bookService;
 		this.clientService = clientService;
@@ -57,15 +56,18 @@ public class BasketService {
 	public boolean basketProceed(HttpServletRequest request) {
 
 		Basket basket = (Basket) request.getSession().getAttribute("basket");
+		if (basket == null) {
+			return false;
+		}
+		else 
 		System.out.println("zaczynam realizowac zamowienie");
 		List<BasketItem> allItemsInBasket = basket.getBasketItems();
 		Book toEdit = new Book();
 		Client client = basket.getClient();
 		List<Basket> history = clientService.getOrderHistory(client);
-		if (allItemsInBasket==null) {
+		if (allItemsInBasket == null) {
 			return false;
-		}
-		else {
+		} else {
 			System.out.println("3");
 
 			for (BasketItem item : allItemsInBasket) {
@@ -74,7 +76,7 @@ public class BasketService {
 				toEdit.setQuantity(toEdit.getQuantity() - item.getQuantity());
 				System.out.println("5   " + toEdit);
 				bookService.saveBook(toEdit);
-				
+
 				history.add(basket);
 				client.setBasketHistory(history);
 				System.out.println(client.getBasketHistory());

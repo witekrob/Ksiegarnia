@@ -2,7 +2,10 @@ package com.witek.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +26,7 @@ public class BasketController {
 	private BasketService basketService;
 	private Basket basket;// = new Basket();
 	List<BasketItem> itemsInBasket;
-
+	private Date date;
 	private int overallPrice = 0;
 	private int price;
 	private Client client;
@@ -42,8 +45,10 @@ public class BasketController {
 		basket = (Basket) request.getSession().getAttribute("basket");
 		if (basket == null) {
 			itemsInBasket = new ArrayList<BasketItem>();
-
 			basket = new Basket();
+			date = new Date();
+			basket.setData(date);
+			
 			basket.setClient(client);
 			overallPrice = 0;
 		}
@@ -105,6 +110,7 @@ public class BasketController {
 	@PostMapping("basketProceed")
 	public String basketProceed(Model model, HttpServletRequest request) {
 		Basket basket = (Basket) request.getSession().getAttribute("basket");
+		if (basket==null) {basket=new Basket();}
 		Client client = (Client) request.getSession().getAttribute("client");
 		String message = null;
 		basket.setClient(client);

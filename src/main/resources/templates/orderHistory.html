@@ -12,17 +12,25 @@
 		<h2>twoja historia zamówień</h2>
 		<table border="2px" th:each="basket : ${orderHistory}">
 			<tr>
+			<th> Data</th>
+				<td th:text="${basket.date}"></td>
+			</tr>
+			<tr>
 				<th>Title</th>
 				<th>Quantity</th>
 				<th>Price</th>
-			</tr>
+		</tr>
 			<tr bgcolor="lightyellow"
 				th:each="basketItem : ${basket.basketItems}">
 
 				<td th:text="${basketItem.book.title}"></td>
 				<td th:text="${basketItem.quantity}"></td>
 				<td th:text="${basketItem.price}"></td>
+
 			</tr>
+			<tr>
+			<th> Overall Price</th>
+			<td>	SUMUJ	</td>
 
 		</table>
 	</div>
