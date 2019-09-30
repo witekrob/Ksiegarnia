@@ -10,7 +10,8 @@
 	<div th:if="${orderHistory}">
 
 		<h2>twoja historia zamówień</h2>
-		<table border="2px" th:each="basket : ${orderHistory}">
+		<div th:each="basket : ${orderHistory}">
+		<table border="2px" >
 			<tr>
 			<th> Data</th>
 				<td th:text="${basket.date}"></td>
@@ -30,9 +31,13 @@
 			</tr>
 			<tr>
 			<th> Overall Price</th>
-			<td>	SUMUJ	</td>
+			<td colspan="2" align="center" bgcolor="lightblue"  th:text="${basket.overallBasketPrice}">	</td>
+			</tr>
 
 		</table>
+		<br> 	
+		</div>
+		
 	</div>
 	<div th:unless="${orderHistory}">
 		<a href="/login">You must log in first</a>

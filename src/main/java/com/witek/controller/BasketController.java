@@ -46,12 +46,13 @@ public class BasketController {
 		if (basket == null) {
 			itemsInBasket = new ArrayList<BasketItem>();
 			basket = new Basket();
-			date = new Date();
-			basket.setData(date);
+	//		date = new Date();
+		//	basket.setData(date);
 			
-			basket.setClient(client);
+	//		basket.setClient(client);
 			overallPrice = 0;
 		}
+		basket.setData(new Date());
 		Book book = bookService.getById(id_number);
 		howMany = Math.abs(howMany);
 		price = book.getPrice() * howMany;
@@ -65,7 +66,7 @@ public class BasketController {
 		itemsInBasket.add(basketItem);
 		basket.setBasketItems(itemsInBasket);
 		request.getSession().setAttribute("basket", basket);
-		;
+		
 
 		model.addAttribute("basket", basket);
 		model.addAttribute("client", client);
@@ -113,7 +114,7 @@ public class BasketController {
 		if (basket==null) {basket=new Basket();}
 		Client client = (Client) request.getSession().getAttribute("client");
 		String message = null;
-		basket.setClient(client);
+		//basket.setClient(client);
 		boolean proceed = basketService.basketProceed(request);
 
 		if (proceed == true) {

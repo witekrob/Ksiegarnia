@@ -49,8 +49,7 @@ public class BasketService {
 	}
 
 	public void removeOneFromBasket(BasketItem item) {
-		int itemId = item.getBasketItem_id();
-		basket.getBasketItems().remove(itemId);
+		basket.getBasketItems().remove(item.getBasketItem_id());
 	}
 
 	public boolean basketProceed(HttpServletRequest request) {
@@ -63,7 +62,8 @@ public class BasketService {
 		System.out.println("zaczynam realizowac zamowienie");
 		List<BasketItem> allItemsInBasket = basket.getBasketItems();
 		Book toEdit = new Book();
-		Client client = basket.getClient();
+		Client client = (Client)request.getSession().getAttribute("client");
+		//		Client client = basket.getClient();
 		List<Basket> history = clientService.getOrderHistory(client);
 		if (allItemsInBasket == null) {
 			return false;
@@ -76,7 +76,8 @@ public class BasketService {
 				toEdit.setQuantity(toEdit.getQuantity() - item.getQuantity());
 				System.out.println("5   " + toEdit);
 				bookService.saveBook(toEdit);
-
+				int overallBasketPrice = this.overallPrice(basket);
+				basket.setOverallBasketPrice(overallBasketPrice);
 				history.add(basket);
 				client.setBasketHistory(history);
 				System.out.println(client.getBasketHistory());

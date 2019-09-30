@@ -29,19 +29,23 @@ public class Basket {
 	@ManyToOne(cascade=CascadeType.REFRESH)
 	private Client client;
 	private Date date;
+	private int overallBasketPrice;
 	public Basket() {
 	}
 
-	public Basket(Client client,int basket_id, List<BasketItem> basketItems, Date date) {
-		this.basket_id = basket_id;
+	//public Basket(Client client,int basket_id, List<BasketItem> basketItems, Date date) {
+	public Basket(int basket_id, List<BasketItem> basketItems, Date date, int overallBasketPrice) {
+			
+	this.basket_id = basket_id;
 		this.basketItems = basketItems;
-		this.client=client;
+	//	this.client=client;
+		this.overallBasketPrice=overallBasketPrice;
 		this.date=date;
 	}
 
 	@Override
 	public String toString() {
-		return "Basket [basket_id=" + basket_id + ", basketItems=" + basketItems + ", client=" + client + ", date="
+		return "Basket [basket_id=" + basket_id + ", basketItems=" + basketItems + ", date="
 				+ date + "]";
 	}
 
@@ -91,13 +95,13 @@ public class Basket {
 		this.basketItems = basketItems;
 	}
 
-	public Client getClient() {
-		return client;
-	}
+//	public Client getClient() {
+	//	return client;
+	//}
 
-	public void setClient(Client client) {
-		this.client = client;
-	}
+	//public void setClient(Client client) {
+	//	this.client = client;
+	//}
 
 	public Date getDate() {
 		return date;
@@ -105,6 +109,14 @@ public class Basket {
 
 	public void setData(Date date) {
 		this.date = date;
+	}
+
+	public int getOverallBasketPrice() {
+		return overallBasketPrice;
+	}
+
+	public void setOverallBasketPrice(int overallBasketPrice) {
+		this.overallBasketPrice = overallBasketPrice;
 	}
 
 }
