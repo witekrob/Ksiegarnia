@@ -39,7 +39,7 @@
 					<td><a th:href="@{'/bookDetails/' + ${book.id_number}}">Details</a></td>
 </tr>
 </table>
-<div th:if="${client.role.toString()=='ADMIN'}">"
+<div th:if="${client.role.toString()=='ADMIN'}">
 <h2> Czy chcesz zmienic jakies dane?</h2>
 
 <form method="post">
@@ -50,6 +50,16 @@
 <input type="number" name="yearOfBirth" min=0 max=2019 step=1 required="required" >New year of birth?<br>
 <input type = "submit">
 </form>
+<br>
+<h2> Czy dodać nową książkę tego autora?</h2>
+<form action="/addNewExistingAuthor" method="post">
+<input type="text" name="title">title?<br> 
+			<input type="number" name="pages" required="required" min=0 step=1> pages?<br> 
+			<input type="number" name="price" required="required" min=0 step=1>price?<br>
+			 <input	type="number" name="quantity" min="0" step=1 required="required">quantity?<br> 
+			 <input type="number" name="author_id" th:value="${author.author_id}" hidden="hidden"><br>
+			 <input type="submit">
+		</form>
 </div>
 </body>
 </html>

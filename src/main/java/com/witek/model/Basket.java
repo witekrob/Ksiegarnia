@@ -23,30 +23,30 @@ public class Basket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int basket_id;
-	@OneToMany(targetEntity=BasketItem.class, cascade=CascadeType.ALL)
+	@OneToMany(targetEntity = BasketItem.class, cascade = CascadeType.ALL)
 	private List<BasketItem> basketItems;
 
-	@ManyToOne(cascade=CascadeType.REFRESH)
+	@ManyToOne(cascade = CascadeType.REFRESH)
 	private Client client;
 	private Date date;
 	private int overallBasketPrice;
+
 	public Basket() {
 	}
 
-	//public Basket(Client client,int basket_id, List<BasketItem> basketItems, Date date) {
-	public Basket(int basket_id, List<BasketItem> basketItems, Date date, int overallBasketPrice) {
-			
-	this.basket_id = basket_id;
+	public Basket(int basket_id, List<BasketItem> basketItems, Date date, int overallBasketPrice, Client client) {
+
+		this.basket_id = basket_id;
 		this.basketItems = basketItems;
-	//	this.client=client;
-		this.overallBasketPrice=overallBasketPrice;
-		this.date=date;
+		this.client = client;
+		this.overallBasketPrice = overallBasketPrice;
+		this.date = date;
 	}
 
 	@Override
 	public String toString() {
-		return "Basket [basket_id=" + basket_id + ", basketItems=" + basketItems + ", date="
-				+ date + "]";
+		return "Basket [basket_id=" + basket_id + ", basketItems=" + basketItems + ", date=" + date + " overallPrice = "
+				+ overallBasketPrice + "]";
 	}
 
 	@Override
@@ -58,8 +58,6 @@ public class Basket {
 		return result;
 	}
 
-	
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -95,13 +93,13 @@ public class Basket {
 		this.basketItems = basketItems;
 	}
 
-//	public Client getClient() {
-	//	return client;
-	//}
+	public Client getClient() {
+		return client;
+	}
 
-	//public void setClient(Client client) {
-	//	this.client = client;
-	//}
+	public void setClient(Client client) {
+		this.client = client;
+	}
 
 	public Date getDate() {
 		return date;

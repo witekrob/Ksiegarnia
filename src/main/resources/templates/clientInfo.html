@@ -8,8 +8,25 @@
 <body>
 
 	<div th:insert="/index.html">...</div>
-	<h2 th:text="${client}"></h2>
-	
-	
-	</body>
-	</html>
+	<table>
+		<tr>
+			<th>client_id</th>
+			<th>name</th>
+			<th>surname</th>
+			<th>email</th>
+			<th>password</th>
+			<th>role</th>
+		</tr>
+		<tr>
+			<td th:text="${client.client_id}"></td>
+			<td th:text="${client.name}"></td>
+			<td th:text="${client.surname}"></td>
+			<td th:text="${client.email}"></td>
+			<td th:text="${client.password}"></td>
+			<td th:text="${client.role}"></td>
+		</tr>
+	</table>
+
+
+</body>
+</html>

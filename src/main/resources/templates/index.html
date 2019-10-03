@@ -7,17 +7,34 @@
 <body>
 <div style="background-color: red">
 	<h1>Księgarnia</h1>
-	 
-<a href = "/addNew">Dodaj nowa</a><br>
-<a href = "/findBy">Szukaj </a> <br>
-<a href = "/showAll">Show all</a><br>
-<a href = "/basketContent">Basket content</a><br>
-<a href = "/orderHistory">Order history</a><br>
-<a href = "/registration" th:unless="${client}">Registration</a><br>
-<a href = "/clientInfo">Client Info</a><br>
-<a href = "/logout"  th:if="${client}">Logout</a><br>
-<a href = "/login"  th:unless="${client}">Login</a><br>
+<table>
 
+<tr bgcolor="white">
+<td><a href = "/addNew">DODAJ NOWĄ</a></td>
+<td><a href = "/findBy">SZUKAJ </a></td>
+<td><a href = "/showAll">SHOW ALL</a></td>
+</tr>
+<tr>
+<td>
+<br>
+</td>
+</tr>
+<tr bgcolor="white">
+<td><a href = "/basketContent">BASKET CONTENT</a></td>
+<td><a href = "/orderHistory">ORDER HISTORY</a></td>
+</tr>
+<tr>
+<td>
+<br>
+</td>
+</tr>
+<tr bgcolor="white">
+<td><a href = "/registration" th:unless="${client}">REGISTRATION</a></td>
+<td><a href = "/clientInfo">CLIENT INFO</a></td>
+<td><a href = "/logout"  th:if="${client}">LOGOUT</a></td>
+<td><a href = "/login"  th:unless="${client}">LOGIN</a></td>
+</tr>
+</table>	 
 </div>
 <h1 th:text="${message}"></h1>
 <script type="text/javascript" src="js.js"></script>

@@ -20,7 +20,7 @@ import com.witek.model.Client;
 public class BasketService {
 	private Basket basket;
 	private BookService bookService;
-	ClientService clientService;
+	private ClientService clientService;
 	private BasketDao basketDao;
 
 	@Autowired
@@ -76,11 +76,9 @@ public class BasketService {
 				toEdit.setQuantity(toEdit.getQuantity() - item.getQuantity());
 				System.out.println("5   " + toEdit);
 				bookService.saveBook(toEdit);
-				int overallBasketPrice = this.overallPrice(basket);
-				basket.setOverallBasketPrice(overallBasketPrice);
 				history.add(basket);
 				client.setBasketHistory(history);
-				System.out.println(client.getBasketHistory());
+				System.out.println("zawartosc koszyka : " + allItemsInBasket);
 				clientService.addNewClient(client);
 				saveBasket(basket);
 				return true;

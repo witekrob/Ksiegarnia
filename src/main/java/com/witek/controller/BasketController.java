@@ -31,7 +31,7 @@ public class BasketController {
 	private int price;
 	private Client client;
 	private ClientService clientService;
-
+	
 	@Autowired
 	public BasketController(BookService bookService, BasketService basketService, ClientService clientService) {
 		this.bookService = bookService;
@@ -43,36 +43,32 @@ public class BasketController {
 	public String addToBasket(HttpServletRequest request, Long id_number, int howMany, Model model) {
 		client = (Client) request.getSession().getAttribute("client");
 		basket = (Basket) request.getSession().getAttribute("basket");
+		BasketItem basketItem = new BasketItem();
 		if (basket == null) {
 			itemsInBasket = new ArrayList<BasketItem>();
 			basket = new Basket();
-	//		date = new Date();
-		//	basket.setData(date);
-			
-	//		basket.setClient(client);
 			overallPrice = 0;
 		}
 		basket.setData(new Date());
+		basket.setClient(client);
 		Book book = bookService.getById(id_number);
 		howMany = Math.abs(howMany);
 		price = book.getPrice() * howMany;
 
-		BasketItem basketItem = new BasketItem();
+		
 		basketItem.setBook(book);
 		basketItem.setQuantity(howMany);
 		basketItem.setPrice(price);
-		int basketItemId = 0;
-		basketItem.setBasketItem_id(basketItemId++);
+		basketItem.setBasket(basket);
 		itemsInBasket.add(basketItem);
 		basket.setBasketItems(itemsInBasket);
-		request.getSession().setAttribute("basket", basket);
-		
-
-		model.addAttribute("basket", basket);
-		model.addAttribute("client", client);
 		overallPrice = basketService.overallPrice(basket);
+		basket.setOverallBasketPrice(overallPrice);
+		
+		request.getSession().setAttribute("basket", basket);
+		model.addAttribute("basket", basket);
+		model.addAttribute("client", client);	
 		request.getSession().setAttribute("overallPrice", overallPrice);
-
 		model.addAttribute("overallPrice", overallPrice);
 
 		return "basketContent";
@@ -85,7 +81,6 @@ public class BasketController {
 		basket = basketService.clearWholeBasket(basket);
 		overallPrice = 0;
 		itemsInBasket = new ArrayList<BasketItem>();
-
 		String message = "Koszyk wyczyszczony";
 
 		request.getSession().setAttribute("basket", basket);

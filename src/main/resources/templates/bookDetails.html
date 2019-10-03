@@ -3,19 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Show details about book</title>
-
-<!--<script>
-function check(){
-var howMany=document.forms["basketCheckForm"]["howMany"];
-var form2=document.getElementById("howMany");
-//var form = document.getElementById("basketCheckForm");
-		console.log(howMany.value);
-		console.log(form2.value);		
-}
-
-</script>
-!-->
-
 </head>
 
 <body>
@@ -55,7 +42,8 @@ var form2=document.getElementById("howMany");
 			<td th:text="${bookDetail.author.country}"></td>
 			<td th:text="${bookDetail.author.yearOfBirth}"></td>
 			<td th:text="${bookDetail.author.author_id}"></td>
-			<td><a th:href="@{'/authorDetails/' + ${bookDetail.author.author_id}}">Details</a></td>
+			<td><a
+				th:href="@{'/authorDetails/' + ${bookDetail.author.author_id}}">Details</a></td>
 		</tr>
 	</table>
 
@@ -66,21 +54,19 @@ var form2=document.getElementById("howMany");
 		<form method="post">
 
 			<input type="text" name="title">New title?<br> 
-			<input	type="number" name="pages" required="required" min=0 step=1>	New	pages?<br>
+			<input type="number" name="pages" required="required" min=0 step=1> New pages?<br> 
 			<input type="number" name="price" required="required" min=0 step=1>New price?<br>
-			 <input type="number" name="quantity" min="0" step=1 required="required">New quantity?<br>
-			<input type="submit">
+			 <input	type="number" name="quantity" min="0" step=1 required="required">New quantity?<br> 
+			 <input type="submit">
 		</form>
 	</div>
 
 	Dodać do koszyka?
 	<form id="basketCheckForm" method="post" action="/addToBasket/">
 
-		<input type="number" th:field="${bookDetail.id_number}"
-			name="id_number" hidden="true"> <input id="howMany"
-			type="number" name="howMany" min=1 step=1> How many add to
-		basket?<br> <input type="submit" id="submitButton"
-			onsubmit="check()"> Add to basket<br>
+		<input type="number" th:field="${bookDetail.id_number}"name="id_number" hidden="true"> 
+		<input id="howMany"type="number" name="howMany" min=1 step=1> How many add to basket?<br> 
+		<input type="submit" id="submitButton"onsubmit="check()"> Add to basket<br>
 
 	</form>
 </body>

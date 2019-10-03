@@ -96,10 +96,20 @@ Client client = (Client)request.getSession().getAttribute("client");
 
 		book.setAuthor(author);
 		author.getBooks().add(book);
-		bookService.saveBook(book);
+		authorService.addNewAuthor(author);
 		model.addAttribute("book", book);
 		model.addAttribute("author", author);
 		return "success";
 	}
+	@PostMapping("/addNewExistingAuthor")
+	public String addNewBookToExistingAuthor(@ModelAttribute Book book, Long author_id, Model model) {
+		Author author = authorService.getById(author_id);
 
+		book.setAuthor(author);
+		author.getBooks().add(book);
+		authorService.addNewAuthor(author);
+		model.addAttribute("book", book);
+		model.addAttribute("author", author);
+		return"success";
+	}
 }
