@@ -38,13 +38,10 @@
 		</tr>
 		<tr bgcolor="yellow" style="font-size: 30px" align="justify">
 			<td th:text="${bookDetail.author.name}"></td>
-			<td th:text="${bookDetail.author.surname}"></td>
+			<td><a th:href="@{'/authorDetails/' + ${bookDetail.author.author_id}}" th:text="${bookDetail.author.surname}"></a></td>
 			<td th:text="${bookDetail.author.country}"></td>
 			<td th:text="${bookDetail.author.yearOfBirth}"></td>
 			<td th:text="${bookDetail.author.author_id}"></td>
-			<td><a
-				th:href="@{'/authorDetails/' + ${bookDetail.author.author_id}}">Details</a></td>
-		</tr>
 	</table>
 
 

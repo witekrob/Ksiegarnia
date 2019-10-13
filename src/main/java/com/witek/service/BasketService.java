@@ -1,7 +1,10 @@
 package com.witek.service;
 
+import java.net.http.HttpRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,13 +60,14 @@ public class BasketService {
 		Basket basket = (Basket) request.getSession().getAttribute("basket");
 		if (basket == null) {
 			return false;
-		}
-		else 
-		System.out.println("zaczynam realizowac zamowienie");
+		} else
+			System.out.println("zaczynam realizowac zamowienie");
 		List<BasketItem> allItemsInBasket = basket.getBasketItems();
 		Book toEdit = new Book();
-		Client client = (Client)request.getSession().getAttribute("client");
-		//		Client client = basket.getClient();
+		Client client = (Client) request.getSession().getAttribute("client");
+		basket.setClient(client);
+
+		// Client client = basket.getClient();
 		List<Basket> history = clientService.getOrderHistory(client);
 		if (allItemsInBasket == null) {
 			return false;
@@ -75,16 +79,19 @@ public class BasketService {
 				toEdit = bookService.getById(item.getBook().getId_number());
 				toEdit.setQuantity(toEdit.getQuantity() - item.getQuantity());
 				System.out.println("5   " + toEdit);
-				bookService.saveBook(toEdit);
-				history.add(basket);
-				client.setBasketHistory(history);
 				System.out.println("zawartosc koszyka : " + allItemsInBasket);
-				clientService.addNewClient(client);
-				saveBasket(basket);
-				return true;
+
 			}
+			bookService.saveBook(toEdit);
+			history.add(basket);
+			client.setBasketHistory(history);
+
+			clientService.addNewClient(client);
+			// saveBasket(basket);
+			return true;
+
 		}
-		return false;
+		// return false;
 	}
 
 	public int overallPrice(Basket basket) {
@@ -99,5 +106,36 @@ public class BasketService {
 
 	public void saveBasket(Basket basket) {
 		basketDao.save(basket);
+	}
+
+	public Basket addToBasket(HttpServletRequest request, List<BasketItem> itemsInBasket, Long id_number, int howMany,
+			Client client, int overallPrice) {
+		int price;
+		String message;
+		Basket basket = (Basket) request.getSession().getAttribute("basket");
+
+		if (basket == null) {
+			basket = new Basket();
+		}
+
+		BasketItem basketItem = new BasketItem();
+
+		basket.setData(new Date());
+		basket.setClient(client);
+		Book book = bookService.getById(id_number);
+		int howManyLeft = book.getQuantity();
+		if (howManyLeft == 0 || howManyLeft < howMany) {
+			System.out.println("Too low stock");
+			return basket;
+		}
+
+		price = book.getPrice() * howMany;
+		basketItem.setBook(book);
+		basketItem.setQuantity(howMany);
+		basketItem.setPrice(price);
+		basketItem.setBasket(basket);
+		itemsInBasket.add(basketItem);
+		basket.setBasketItems(itemsInBasket);
+		return basket;
 	}
 }

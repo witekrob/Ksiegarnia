@@ -34,9 +34,8 @@
 <th> Quantity</th>
 </tr>
 <tr  th:block th:each="book : ${author.books}" bgcolor="yellow" align="justify" style="font-size: 30px">
-					<td th:text="${book.title}">nie ma nic</td>
-					<td th:text="${book.quantity}">nie ma nic</td>
-					<td><a th:href="@{'/bookDetails/' + ${book.id_number}}">Details</a></td>
+			<td><a th:href="@{'/bookDetails/' + ${book.id_number}}" th:text="${book.title}"></a></td>			
+			<td th:text="${book.quantity}">nie ma nic</td>
 </tr>
 </table>
 <div th:if="${client.role.toString()=='ADMIN'}">

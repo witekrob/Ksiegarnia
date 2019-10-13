@@ -2,7 +2,6 @@ package com.witek.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,13 +13,13 @@ public class BasketItem {
 
 	
 @Id
-@GeneratedValue(strategy=GenerationType.IDENTITY)
+@GeneratedValue(strategy=GenerationType.AUTO)
 private int basketItem_id;
 @OneToOne(targetEntity=Book.class)
 private Book book;
 private int quantity;
 private int price;
-@ManyToOne (cascade=CascadeType.ALL)
+@ManyToOne (cascade=CascadeType.PERSIST)
 private Basket basket;
 public BasketItem() {}
 public BasketItem(int basketItem_id,Book book, int quantity, int price) {

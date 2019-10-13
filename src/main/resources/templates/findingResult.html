@@ -13,16 +13,14 @@
 			<th>Surname</th>
 			<th>Country</th>
 			<th>Year of birth</th>
-			<th>Author details</th>
 		</tr>
 		<th:block th:each="author : ${find}">
 			<tr bgcolor="yellow" style="font-size: 30px" align="justify">
 
 				<td th:text="${author.name}"></td>
-				<td th:text="${author.surname}"></td>
+				<td><a th:href="@{'/authorDetails/' + ${author.author_id}}" th:text="${author.surname}"></a></td>
 				<td th:text="${author.country}"></td>
 				<td th:text="${author.yearOfBirth}"></td>
-				<td><a th:href="@{'/authorDetails/' + ${author.author_id}}">Details</a></td>
 			</tr>
 
 		</th:block>
