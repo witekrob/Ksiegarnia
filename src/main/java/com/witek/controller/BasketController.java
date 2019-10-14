@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.witek.dao.BasketItemDao;
@@ -142,7 +143,6 @@ public class BasketController {
 
 	@PostMapping("changeItemQuantity")
 	public String changeItemQuantity(int newQuantity, String bookTitleToChange, Model model, HttpServletRequest request) {
-		
 		String title = bookTitleToChange;
 		Basket basket = (Basket) request.getSession().getAttribute("basket");
 		
@@ -151,11 +151,9 @@ public class BasketController {
 		System.out.println(itemToChange);
 
 		
-		//BasketItem itemToChange = basket.getBasketItems().get(basketItem_id);
 		itemToChange.setQuantity(newQuantity);
 		int newPrice = itemToChange.getQuantity() * itemToChange.getBook().getPrice();
 		itemToChange.setPrice(newPrice);
-		//basket.getBasketItems().set(basketItem_id, itemToChange);
 		overallPrice = basketService.overallPrice(basket);
 		basket.setOverallBasketPrice(overallPrice);
 		model.addAttribute("basket", basket);

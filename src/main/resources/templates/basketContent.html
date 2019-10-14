@@ -3,6 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Show basket content</title>
+<style>
+table {
+  counter-reset: section;
+}
+
+.count:before {
+  counter-increment: section;
+  content: counter(section);
+}
+
+</style>
 </head>
 
 <body>
@@ -17,20 +28,17 @@
 				<th>Price</th>
 				<th>Quantity</th>
 				<th>Price (price*quantity))</th>
-				<th> Basket item_id</th>
 				<th>New quantity</th>
 			</tr>
 
 
 			<tr bgcolor="lightblue" th:each="basketItem : ${basket.basketItems}">
-				<td th:text="${basket.basketItems.size()}">
+				<td class="count"></td>
 				<td th:text="${basketItem.book.title}"></td>
 				<td th:text="${basketItem.book.author.surname}"></td>
 				<td th:text="${basketItem.book.price}"></td>
 				<td th:text="${basketItem.quantity}"></td>
 				<td th:text="${basketItem.price}"></td>
-				<td th:text="${basketItem.basketItem_id}"></td>
-
 				<td>
 					<form method="post" action="/changeItemQuantity">
 						<input type="text" th:value="${basketItem.book.title}"
