@@ -1,10 +1,8 @@
 package com.witek.service;
 
-import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,13 +23,15 @@ public class BasketService {
 	private BookService bookService;
 	private ClientService clientService;
 	private BasketDao basketDao;
+	private adminService adminService;
 
 	@Autowired
-	public BasketService(BasketDao basketDao, Basket basket, BookService bookService, ClientService clientService) {
+	public BasketService(BasketDao basketDao, Basket basket, BookService bookService, ClientService clientService, adminService adminService) {
 		this.basket = basket;
 		this.bookService = bookService;
 		this.clientService = clientService;
 		this.basketDao = basketDao;
+		this.adminService=adminService;
 	}
 
 	public BasketService() {
@@ -67,7 +67,6 @@ public class BasketService {
 		Client client = (Client) request.getSession().getAttribute("client");
 		basket.setClient(client);
 
-		// Client client = basket.getClient();
 		List<Basket> history = clientService.getOrderHistory(client);
 		if (allItemsInBasket == null) {
 			return false;
@@ -78,7 +77,10 @@ public class BasketService {
 				System.out.println("4");
 				toEdit = bookService.getById(item.getBook().getId_number());
 				toEdit.setQuantity(toEdit.getQuantity() - item.getQuantity());
-				System.out.println("5   " + toEdit);
+				if (toEdit.getQuantity()==0) {
+					adminService.outOfStock(toEdit);
+				}
+				System.out.println("5   " + toEdit.getTitle());
 				System.out.println("zawartosc koszyka : " + allItemsInBasket);
 
 			}
@@ -91,7 +93,6 @@ public class BasketService {
 			return true;
 
 		}
-		// return false;
 	}
 
 	public int overallPrice(Basket basket) {

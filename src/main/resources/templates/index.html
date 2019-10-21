@@ -30,10 +30,10 @@
 </td>
 </tr>
 <tr bgcolor="white">
-<td><a href = "/registration" th:unless="${client}">REGISTRATION</a></td>
-<td><a href = "/clientInfo">CLIENT INFO</a></td>
-<td><a href = "/logout"  th:if="${client}">LOGOUT</a></td>
-<td><a href = "/login"  th:unless="${client}">LOGIN</a></td>
+<td><a href = "/registration" th:unless="${client!=null}">REGISTRATION</a></td>
+<td><a href = "/clientInfo" th:if="${client!=null}">CLIENT INFO</a></td>
+<td><a href = "/logout"  th:if="${client!=null}">LOGOUT</a></td>
+<td><a href = "/login"  th:unless="${client!=null}">LOGIN</a></td>
 </tr>
 </table>	 
 </div>

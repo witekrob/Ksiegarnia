@@ -34,6 +34,7 @@ public class HomeController {
 		else {
 			message="niezalogowany";
 		}
+		model.addAttribute("client",client); 
 		model.addAttribute("message",message);
 		
 		return "index";

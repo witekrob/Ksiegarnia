@@ -41,10 +41,11 @@ public class BookController {
 	}
 
 	@GetMapping("/bookDetails")
-	public String getAll(Model model) {
+	public String getAll(Model model,HttpServletRequest request) {
 		allAuthors = authorService.getAll();
 		model.addAttribute("allAuthors", allAuthors);
-
+		Client client = (Client) request.getSession().getAttribute("client");
+		model.addAttribute("client",client); 
 		return "showAll";
 	}
 
@@ -79,7 +80,9 @@ Client client = (Client)request.getSession().getAttribute("client");
 	}
 
 	@GetMapping("/addNew")
-	public String addNew() {
+	public String addNew(HttpServletRequest request, Model model) {
+		Client client = (Client)request.getSession().getAttribute("client");
+		model.addAttribute("client",client);
 		return "addNew";
 
 	}
@@ -88,7 +91,6 @@ Client client = (Client)request.getSession().getAttribute("client");
 	public String form(@ModelAttribute Book book, Author author, Model model) {
 		Author result = authorService.checkIfExist(author);
 		System.out.println("SPRAWDZAM : " + book + " " + author);
-
 		System.out.println("wynik to :  " + result + "a wpisywany to : " + author);
 		if (result != null) {
 			author = result;
@@ -99,6 +101,8 @@ Client client = (Client)request.getSession().getAttribute("client");
 		authorService.addNewAuthor(author);
 		model.addAttribute("book", book);
 		model.addAttribute("author", author);
+		model.addAttribute("author", author);
+		
 		return "success";
 	}
 	@PostMapping("/addNewExistingAuthor")

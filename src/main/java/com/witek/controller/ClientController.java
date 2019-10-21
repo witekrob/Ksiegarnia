@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.witek.model.Client;
+import com.witek.model.PersonalDetails;
 import com.witek.service.ClientService;
 
 @Controller
@@ -44,7 +45,10 @@ public String registration(@ModelAttribute("client")@Valid Client client, Bindin
 }
 @GetMapping("clientInfo")
 public String clientInfo(Model model,HttpServletRequest request) {
-	Client client = (Client)request.getSession().getAttribute("client");
+//	Client client = (Client)request.getSession().getAttribute("client");
+	Client client = clientService.getClient();
+	
+	
 	System.out.println(client);
 	if (client!=null) {
 	model.addAttribute("client",client);
@@ -60,7 +64,9 @@ public String logout(HttpServletRequest request) {
 	return "index";
 }
 @GetMapping("login")
-public String login() {
+public String login(Model model) {
+	Client client = clientService.getClient();
+model.addAttribute("client",client);
 	return "login";
 }
 @PostMapping("login")
@@ -75,5 +81,17 @@ public String login(Model model,String email, String password,HttpServletRequest
 	String loginResult = ("couldn't find client that match this details" + " " + email + " " + password);
 	model.addAttribute("loginResult", loginResult);
 	return "login";
+}
+@PostMapping("/editDetails")
+public String editDetails(@ModelAttribute PersonalDetails details,Model model, HttpServletRequest request) {
+	Client client = clientService.getClient();
+	client.setPersonalDetails(details);
+	request.getSession().setAttribute("client",client);
+	System.out.println(client);
+	clientService.addNewClient(client);
+	
+	model.addAttribute("client",client);
+	
+	return "clientInfo";
 }
 }

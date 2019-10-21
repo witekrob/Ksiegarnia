@@ -23,17 +23,19 @@ public class Book {
 	private int pages;
 	private int price;
 	private int quantity;
+	private String description;
 
 	public Book() {
 	}
 
-	public Book(Long id_number,String title, Author author, int price, int pages, int quantity) {
+	public Book(Long id_number,String title, Author author, int price, int pages, int quantity, String desc) {
 		this.id_number= id_number;
 		this.title = title;
 		this.author = author;
 		this.pages = pages;
 		this.price=price;
 		this.quantity=quantity;
+		this.description=desc;
 	}
 
 	@Override
@@ -131,6 +133,14 @@ public class Book {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

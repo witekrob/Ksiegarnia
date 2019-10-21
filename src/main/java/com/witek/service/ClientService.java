@@ -29,13 +29,16 @@ public class ClientService {
 
 	public void addNewClient(Client client) {
 		String email = client.getEmail();
+		System.out.println(client.getPersonalDetails());
+		
 		Client check = clientDao.findByEmail(email);
 		if (check == null) {
 			if (client.getRole()==null) {
 				client.setRole(Role.CLIENT);
 			}
-			clientDao.save(client);
 		}
+		clientDao.save(client);
+		
 	}
 
 	public Client login(String email, String password) {
@@ -63,5 +66,9 @@ public class ClientService {
 	public void logout(HttpServletRequest request) {
 		request.getSession().invalidate();
 		System.out.println("log out");
+	}
+	public Client getClient(HttpServletRequest request) {
+		Client client = (Client)request.getSession().getAttribute("client");
+		return client;
 	}
 }

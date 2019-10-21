@@ -25,8 +25,34 @@
 			<td th:text="${client.password}"></td>
 			<td th:text="${client.role}"></td>
 		</tr>
+		<tr>
+		<th> City</th>
+		<th> Street</th>
+		<th> Post code</th>
+		<th> Tel number</th>
+		</tr>
+		<tr th:if="${client.personalDetails!=null}">
+		<td th:text="${client.personalDetails.city}">nie podano</td>
+		<td th:text="${client.personalDetails.street}">nie podano</td>
+		<td th:text="${client.personalDetails.postCode}">nie podano</td>
+		<td th:text="${client.personalDetails.telNumber}">nie podano</td>
+	</tr>
 	</table>
 
+	<form action="/editDetails" method="post" >
+			<input type="text" name="city">Enter city name
+			<br>
+			<input type="text" name="street">Enter street name
+			<br>
+			<input type="text" name="postCode">Enter post code
+			<br>
+			<input type="text" name="telNumber">Enter tel number
+			<br>
+			<input type="number" th:value="${client.client_id}" name="clientId">
+			<br>
+			<input type="submit">
+
+	</form>
 
 </body>
 </html>

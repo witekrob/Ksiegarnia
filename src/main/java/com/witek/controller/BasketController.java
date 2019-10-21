@@ -35,22 +35,22 @@ public class BasketController {
 	private Date date;
 	private int overallPrice = 0;
 	private int price;
-	private Client client;
 	private ClientService clientService;
+	private Client client;
 	private BasketItemService itemService;
 
 	@Autowired
-	public BasketController(BookService bookService, BasketService basketService, ClientService clientService,
-			BasketItemService itemService) {
+	public BasketController(BookService bookService, BasketService basketService, ClientService clientService,BasketItemService itemService) {
 		this.bookService = bookService;
 		this.basketService = basketService;
 		this.clientService = clientService;
 		this.itemService = itemService;
+		
 	}
 
 	@PostMapping("/addToBasket")
 	public String addToBasket(HttpServletRequest request, Long id_number, int howMany, Model model) {
-		client = (Client) request.getSession().getAttribute("client");
+		client =clientService.getClient();
 		basket = (Basket) request.getSession().getAttribute("basket");
 		if (basket == null) {
 			basket = new Basket();
@@ -75,7 +75,9 @@ public class BasketController {
 
 	@GetMapping("/clearWholeBasket")
 	public String clearWholeBasket(HttpServletRequest request, Model model) {
-		Client client = (Client) request.getSession().getAttribute("client");
+		//Client client = (Client) request.getSession().getAttribute("client");
+		client =clientService.getClient();
+		
 		System.out.println("Zaczynam czyscic koszyk");
 		basket = basketService.clearWholeBasket(basket);
 		overallPrice = 0;
@@ -91,8 +93,9 @@ public class BasketController {
 
 	@GetMapping("basketContent")
 	public String basketContent(Model model, HttpServletRequest request) {
-		Client client = (Client) request.getSession().getAttribute("client");
-
+		//Client client = (Client) request.getSession().getAttribute("client");
+		client =clientService.getClient();
+		
 		Basket basket = (Basket) request.getSession().getAttribute("basket");
 		model.addAttribute("client", client);
 		model.addAttribute("basket", basket);
@@ -107,7 +110,7 @@ public class BasketController {
 		if (basket == null) {
 			basket = new Basket();
 		}
-		Client client = (Client) request.getSession().getAttribute("client");
+		//Client client = (Client) request.getSession().getAttribute("client");
 		String message = null;
 
 		boolean proceed = basketService.basketProceed(request);
@@ -131,7 +134,9 @@ public class BasketController {
 
 	@GetMapping("orderHistory")
 	public String orderHistory(Model model, HttpServletRequest request) {
-		Client client = (Client) request.getSession().getAttribute("client");
+		//Client client = (Client) request.getSession().getAttribute("client");
+		client =clientService.getClient();
+		
 		List<Basket> orderHistory = new ArrayList<Basket>();
 		if (client != null) {
 			orderHistory = clientService.getOrderHistory(client);

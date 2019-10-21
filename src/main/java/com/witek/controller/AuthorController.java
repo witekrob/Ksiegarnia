@@ -17,6 +17,7 @@ import com.witek.model.Author;
 import com.witek.model.Client;
 import com.witek.model.Role;
 import com.witek.service.AuthorService;
+import com.witek.service.ClientService;
 
 @Controller
 public class AuthorController {
@@ -29,7 +30,10 @@ public class AuthorController {
 	}
 
 	@GetMapping("/findBy")
-	public String findBy() {
+	public String findBy(Model model, HttpServletRequest request) {
+		Client client = (Client)request.getSession().getAttribute("client");
+		model.addAttribute("client",client);
+		
 		return "find";
 	}
 
@@ -39,7 +43,6 @@ public class AuthorController {
 		Author author = authorService.getById(author_id);
 		System.out.println(author);
 		Client client = (Client)request.getSession().getAttribute("client");
-		
 		if (client!=null) {
 			model.addAttribute("client",client);
 			}

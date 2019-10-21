@@ -23,6 +23,9 @@
 			<td th:text="${bookDetail.id_number}"></td>
 			<td th:text="${bookDetail.quantity}"></td>
 		</tr>
+		<tr>
+		<td colspan="5" th:text="${bookDetail.description}"></td>
+		</tr>
 	</table>
 
 	<table border="2px">
@@ -54,6 +57,7 @@
 			<input type="number" name="pages" required="required" min=0 step=1> New pages?<br> 
 			<input type="number" name="price" required="required" min=0 step=1>New price?<br>
 			 <input	type="number" name="quantity" min="0" step=1 required="required">New quantity?<br> 
+			 <input type ="text" name = "description"> New description?<br> 
 			 <input type="submit">
 		</form>
 	</div>

@@ -38,12 +38,13 @@ private String email;
 @Size(min=3,max=20)
 private String password;
 private Role role;
-
+@OneToOne(cascade = CascadeType.ALL)
+private PersonalDetails personalDetails;
 @OneToMany(cascade = CascadeType.ALL)
 private List<Basket> basketHistory;
 
 public Client() {}
-public Client(String name, String surname, String email, String password, int client_id, List<Basket> basketHistory, Role role) {
+public Client(String name, String surname, String email, String password, int client_id, List<Basket> basketHistory, Role role,PersonalDetails personalDetails) {
 	this.client_id=client_id;
 	this.email=email;
 	this.name=name;
@@ -51,6 +52,7 @@ public Client(String name, String surname, String email, String password, int cl
 	this.password=password;
 	this.basketHistory=basketHistory;
 	this.role=role;
+	this.setPersonalDetails(personalDetails);
 }
 
 public int getClient_id() {
@@ -130,7 +132,8 @@ public boolean equals(Object obj) {
 @Override
 public String toString() {
 	return "Client [client_id=" + client_id + ", name=" + name + ", surname=" + surname + ", email=" + email
-			+ ", password=" + password + ", role = " + role + "  ]";
+			+ ", password=" + password + ", role=" + role + ", personalDetails=" + personalDetails + ", basketHistory="
+			+ basketHistory + "]";
 }
 public List<Basket> getBasketHistory() {
 	return basketHistory;
@@ -143,6 +146,12 @@ public Role getRole() {
 }
 public void setRole(Role role) {
 	this.role = role;
+}
+public PersonalDetails getPersonalDetails() {
+	return personalDetails;
+}
+public void setPersonalDetails(PersonalDetails personalDetails) {
+	this.personalDetails = personalDetails;
 }
 	
 
